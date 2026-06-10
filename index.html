@@ -4,174 +4,328 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Bot Collective</title>
-    <!-- Telegram SDK -->
+    <!-- Telegram WebApp Script -->
     <script src="https://telegram.org"></script>
-    <!-- Tailwind CSS v4 -->
-    <script src="https://jsdelivr.net"></script>
     <style>
-        body {
-            background-color: var(--tg-theme-bg-color, #111827);
-            color: var(--tg-theme-text-color, #ffffff);
+        /* CSS RESET & THEME */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
-        .active-tab {
-            color: var(--tg-theme-link-color, #3b82f6);
+        body {
+            background-color: #0b0f19;
+            color: #ffffff;
+            padding: 16px;
+            padding-bottom: 100px;
+        }
+
+        /* HEADER */
+        .app-header {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .app-header h1 {
+            font-size: 22px;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+        .app-header p {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        .user-pill {
+            font-size: 12px;
+            background-color: #1f2937;
+            padding: 4px 12px;
+            border-radius: 20px;
+            color: #e5e7eb;
+        }
+
+        /* CHUPANE WALI CLASS */
+        .hidden {
+            display: none !important;
+        }
+
+        /* BOT CARD LIST */
+        .bot-container {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .bot-card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .bot-main-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        .bot-avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background-color: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .bot-text-details {
+            flex: 1;
+        }
+        .bot-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .bot-title-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #f3f4f6;
+        }
+        .bot-badge {
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        .badge-active {
+            background-color: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+        }
+        .badge-maintenance {
+            background-color: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+        }
+        .bot-user-handle {
+            font-size: 13px;
+            color: #9ca3af;
+            margin-top: 2px;
+        }
+        .bot-numeric-id {
+            font-size: 11px;
+            color: #4b5563;
+            margin-top: 2px;
+        }
+        .bot-actions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .action-button {
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn-blue {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
+        .btn-gray {
+            background-color: #1f2937;
+            color: #ffffff;
+            border: 1px solid #374151;
+        }
+
+        /* SCREENS STYLING */
+        .profile-layout {
+            text-align: center;
+            padding: 24px 0;
+        }
+        .large-dp-circle {
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            margin: 0 auto 16px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .bg-blue-gradient {
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+        }
+        .bg-amber-gradient {
+            background: linear-gradient(135deg, #d97706, #ea580c);
+        }
+        .main-heading {
+            font-size: 24px;
+            font-weight: bold;
+            color: #f3f4f6;
+        }
+        .sub-heading {
+            font-size: 14px;
+            color: #3b82f6;
+            margin-top: 4px;
+        }
+
+        /* SYSTEM DATA BOX */
+        .data-table-box {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 16px;
+            padding: 16px;
+            margin: 20px auto 0 auto;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-align: left;
+        }
+        .data-table-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(55, 65, 81, 0.4);
+        }
+        .data-table-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .row-label {
+            color: #9ca3af;
+        }
+        .row-value {
+            color: #e5e7eb;
+            font-weight: 500;
+        }
+        .monospace {
+            font-family: monospace;
+        }
+        .owner-submit-btn {
+            background: linear-gradient(90deg, #ea580c, #d97706);
+            color: #ffffff;
+            font-weight: bold;
+            padding: 12px 36px;
+            border-radius: 12px;
+            border: none;
+            margin-top: 24px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* FIXED FOOTER NAVIGATION */
+        .bottom-nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #030712;
+            border-top: 1px solid #1f2937;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            z-index: 9999;
+        }
+        .nav-item-btn {
+            background: none;
+            border: none;
+            color: #4b5563;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            width: 33.33%;
+        }
+        .nav-item-btn svg {
+            width: 22px;
+            height: 22px;
+        }
+        .nav-item-btn span {
+            font-size: 11px;
+            font-weight: 500;
+        }
+        .nav-item-btn.active-tab-highlight {
+            color: #3b82f6;
         }
     </style>
 </head>
-<body class="p-4 font-sans pb-24">
+<body>
 
-    <!-- PAGE 1: HOME (BOT LIST) -->
-    <div id="page-home" class="page-content">
-        <!-- Header -->
-        <div class="mb-6 flex justify-between items-center">
+    <!-- SCREEN 1: HOME (BOT LIST) -->
+    <div id="screen-home" class="page-container">
+        <div class="app-header">
             <div>
-                <h1 class="text-xl font-bold text-blue-500">Music Bot Collective</h1>
-                <p class="text-xs text-gray-400">All active bots & activities list</p>
+                <h1>Music Bot Collective</h1>
+                <p>All active bots & activities list</p>
             </div>
-            <span id="user-top-name" class="text-sm bg-gray-800 px-3 py-1 rounded-full text-gray-300">Hi, User</span>
+            <span id="user-top-name" class="user-pill">Hi, User</span>
         </div>
-
-        <!-- Bot List Container -->
-        <div id="bot-list" class="space-y-4">
-            <!-- Dynamic list will be generated here -->
+        <div id="bot-list-target" class="bot-container">
+            <!-- Data load via script -->
         </div>
     </div>
 
-    <!-- PAGE 2: USER PROFILE -->
-    <div id="page-profile" class="page-content hidden text-center py-8">
-        <!-- User DP (Initial Letter Gradient) -->
-        <div id="user-dp" class="w-24 h-24 bg-gradient-to-tr from-blue-600 to-indigo-500 rounded-full mx-auto flex items-center justify-center text-3xl font-bold text-white mb-4 shadow-lg border-2 border-indigo-400/20">
-            U
-        </div>
-        
-        <h2 id="user-full-name" class="text-2xl font-bold text-gray-100">Telegram User</h2>
-        <p id="user-username-val" class="text-blue-400 text-sm font-medium">@Username</p>
+    <!-- SCREEN 2: USER PROFILE -->
+    <div id="screen-profile" class="page-container hidden profile-layout">
+        <div id="user-avatar-initial" class="large-dp-circle bg-blue-gradient">U</div>
+        <h2 id="user-display-name" class="main-heading">Telegram User</h2>
+        <p id="user-handle-name" class="sub-heading">@Username</p>
 
-        <!-- Profile Details Box -->
-        <div class="mt-6 p-4 bg-gray-900/60 rounded-2xl border border-gray-800 text-left max-w-sm mx-auto space-y-3 shadow-inner">
-            <div class="flex justify-between border-b border-gray-800/50 pb-2">
-                <span class="text-sm text-gray-400">User ID</span>
-                <span id="user-id-val" class="text-sm font-mono text-gray-200">00000000</span>
+        <div class="data-table-box">
+            <div class="data-table-row">
+                <span class="row-label">User ID</span>
+                <span id="field-user-id" class="row-value monospace">00000000</span>
             </div>
-            <div class="flex justify-between border-b border-gray-800/50 pb-2">
-                <span class="text-sm text-gray-400">Chat ID</span>
-                <span id="user-chat-val" class="text-sm font-mono text-gray-200">00000000</span>
+            <div class="data-table-row">
+                <span class="row-label">Chat ID</span>
+                <span id="field-chat-id" class="row-value monospace">00000000</span>
             </div>
-            <div class="flex justify-between border-b border-gray-800/50 pb-2">
-                <span class="text-sm text-gray-400">Premium User</span>
-                <span id="user-premium-val" class="text-sm font-medium text-gray-200">No</span>
+            <div class="data-table-row">
+                <span class="row-label">Premium User</span>
+                <span id="field-premium" class="row-value">No</span>
             </div>
-            <div class="flex justify-between">
-                <span class="text-sm text-gray-400">Language</span>
-                <span id="user-lang-val" class="text-sm font-medium text-gray-200">EN</span>
+            <div class="data-table-row">
+                <span class="row-label">Language</span>
+                <span id="field-lang" class="row-value">EN</span>
             </div>
         </div>
     </div>
 
-    <!-- PAGE 3: OWNER DETAILS -->
-    <div id="page-owner" class="page-content hidden text-center py-8">
-        <!-- Owner DP -->
-        <div class="w-24 h-24 bg-gradient-to-tr from-amber-500 to-orange-600 rounded-full mx-auto flex items-center justify-center text-3xl font-bold text-white mb-4 shadow-lg border-2 border-amber-400/20">
-            👑
-        </div>
-        
-        <!-- YAHAN APNA DATA EDIT KAREIN -->
-        <h2 class="text-2xl font-bold text-gray-100">Niraj Kumar</h2> <!-- Owner Name -->
-        <p class="text-amber-400 text-sm font-medium">@Comeback_009</p> <!-- Owner Username -->
+    <!-- SCREEN 3: OWNER DETAILS -->
+    <div id="screen-owner" class="page-container hidden profile-layout">
+        <div class="large-dp-circle bg-amber-gradient">👑</div>
+        <h2 class="main-heading">Niraj Kumar</h2>
+        <p class="sub-heading" style="color: #fbbf24;">@Comeback_009</p>
 
-        <!-- Owner Details Box -->
-        <div class="mt-6 p-4 bg-gray-900/60 rounded-2xl border border-gray-800 text-left max-w-sm mx-auto space-y-3 shadow-inner">
-            <div class="flex justify-between border-b border-gray-800/50 pb-2">
-                <span class="text-sm text-gray-400">Owner User ID</span>
-                <span class="text-sm font-mono text-amber-400">7771481658</span> <!-- Owner User ID -->
+        <div class="data-table-box">
+            <div class="data-table-row">
+                <span class="row-label">Owner User ID</span>
+                <span class="row-value monospace" style="color: #fbbf24;">7771481658</span>
             </div>
-            <div class="flex justify-between border-b border-gray-800/50 pb-2">
-                <span class="text-sm text-gray-400">Owner Chat ID</span>
-                <span class="text-sm font-mono text-amber-400">7771481658</span> <!-- Owner Chat ID -->
+            <div class="data-table-row">
+                <span class="row-label">Owner Chat ID</span>
+                <span class="row-value monospace" style="color: #fbbf24;">7771481658</span>
             </div>
-            <div class="flex justify-between">
-                <span class="text-sm text-gray-400">Network Status</span>
-                <span class="text-sm font-medium text-green-400 flex items-center gap-1">
-                    <span class="w-2 h-2 bg-green-500 rounded-full animate-ping"></span> Main Owner
-                </span>
+            <div class="data-table-row">
+                <span class="row-label">Network Status</span>
+                <span class="row-value" style="color: #4ade80;">Main Owner</span>
             </div>
         </div>
-
-        <p class="text-gray-400 text-xs max-w-xs mx-auto mt-6 leading-relaxed">
-            For advertisement, promotions, or system configurations, click below to chat.
-        </p>
-
-        <button onclick="window.open('https://t.me/Comeback_009', '_blank')" class="mt-6 bg-gradient-to-r from-amber-500 to-orange-500 text-gray-950 font-bold px-8 py-3 rounded-xl shadow-md transition active:scale-95 text-sm">
+        <button onclick="window.open('https://t.me', '_blank')" class="owner-submit-btn">
             Contact Owner
         </button>
     </div>
 
-    <!-- BOTTOM NAVIGATION BAR (3 ICONS) -->
-    <div class="fixed bottom-0 left-0 right-0 bg-gray-950 border-t border-gray-800 flex justify-around py-3 text-gray-500 z-50">
-        <!-- Home Tab -->
-        <button onclick="switchPage('home')" id="tab-home" class="flex flex-col items-center gap-1 active-tab">
-            <svg xmlns="http://w3.org" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-            <span class="text-[10px]">Home</span>
-        </button>
-        <!-- Profile Tab -->
-        <button onclick="switchPage('profile')" id="tab-profile" class="flex flex-col items-center gap-1">
-            <svg xmlns="http://w3.org" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-            <span class="text-[10px]">User Profile</span>
-        </button>
-        <!-- Owner Tab -->
-        <button onclick="switchPage('owner')" id="tab-owner" class="flex flex-col items-center gap-1">
-            <svg xmlns="http://w3.org" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-            <span class="text-[10px]">Owner Details</span>
-        </button>
-    </div>
-
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.ready();
-        tg.expand();
-
-        // ==========================================
-        // YAHAN APNE BOTS KA DATA DIRECT ADD KAREIN
-        // ==========================================
-        const myMusicBots = [
-            { id: "8942499994", name: "˹ʟᴀᴀᴅᴏ ꭙ ᴍᴜsɪᴄ˼ ♪", username: "laado_musicbot", status: "Active", dp: "🎵" },
-            { id: "694021942", name: "Lo-Fi Beats 24/7", username: "lofi_beats_pro_bot", status: "Active", dp: "🎧" },
-            { id: "739201948", name: "Bollywood Remix Bot", username: "bolly_remix_music_bot", status: "Maintenance", dp: "📻" },
-            { id: "820491823", name: "High-Res Audio Player", username: "hires_music_bot", status: "Active", dp: "💿" }
-        ];
-
-        // Telegram App se dynamic Live User data reading
-        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            const user = tg.initDataUnsafe.user;
-            
-            document.getElementById('user-top-name').innerText = `Hi, ${user.first_name}`;
-            document.getElementById('user-full-name').innerText = `${user.first_name} ${user.last_name || ''}`;
-            document.getElementById('user-username-val').innerText = user.username ? `@${user.username}` : '@NoUsername';
-            document.getElementById('user-id-val').innerText = user.id;
-            document.getElementById('user-chat-val').innerText = user.id; // User ID hi private Chat ID hoti h
-            document.getElementById('user-premium-val').innerText = user.is_premium ? 'Yes ⭐' : 'No';
-            document.getElementById('user-lang-val').innerText = user.language_code ? user.language_code.toUpperCase() : 'EN';
-            
-            if(user.first_name) {
-                document.getElementById('user-dp').innerText = user.first_name.charAt(0).toUpperCase();
-            }
-        }
-
-        // Home List builder
-        function displayBots(bots) {
-            const listContainer = document.getElementById('bot-list');
-            listContainer.innerHTML = '';
-
-            bots.forEach(bot => {
-                const card = document.createElement('div');
-                card.className = "bg-zinc-900 border border-zinc-800 rounded-2xl p-4 flex flex-col gap-3 shadow-md";
-                const is_active = bot.status === 'Active';
-                const statusBg = is_active ? 'bg-green-500/10 text-green-400' : 'bg-amber-500/10 text-amber-400';
-
-                card.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-full bg-blue-600/20 flex items-center justify-center text-xl border border-blue-500/20">
-                            ${bot.dp}
-                        </div>
-                        <div class="flex-1">
-  
+    <!-- BOTTOM FIXED NAV SYSTEM -->
+    <div class="bottom-nav-bar">
+        
