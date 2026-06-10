@@ -3,318 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Bot Collective</title>
-    <!-- Telegram SDK -->
+    <title>Telegram Bot Store Mini App</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://tailwindcss.com"></script>
+    <!-- Telegram Web App Script -->
     <script src="https://telegram.org"></script>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-        body {
-            background-color: #0b0f19;
-            color: #ffffff;
-            padding: 16px;
-            padding-bottom: 95px;
-        }
-
-        /* Tabs System Configuration */
-        .page-content {
-            display: none;
-        }
-        .active-page {
-            display: block !important;
-        }
-
-        /* Header Style */
-        .app-header {
-            margin-bottom: 20px;
-        }
-        .app-header h1 {
-            font-size: 22px;
-            color: #3b82f6;
-            font-weight: bold;
-        }
-        .app-header p {
-            font-size: 12px;
-            color: #9ca3af;
-            margin-top: 2px;
-        }
-
-        /* Bot Cards Styling */
-        .bot-card {
-            background-color: #111827;
-            border: 1px solid #1f2937;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 14px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-        .bot-main-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 14px;
-        }
-        .bot-avatar {
-            width: 46px;
-            height: 46px;
-            border-radius: 50%;
-            background-color: rgba(59, 130, 246, 0.15);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-        .bot-text-details {
-            flex: 1;
-        }
-        .bot-title-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .bot-title-name {
-            font-size: 16px;
-            font-weight: 700;
-            color: #f3f4f6;
-        }
-        .bot-badge {
-            font-size: 10px;
-            font-weight: bold;
-            padding: 2px 8px;
-            border-radius: 10px;
-        }
-        .badge-active {
-            background-color: rgba(34, 197, 94, 0.15);
-            color: #4ade80;
-        }
-        .badge-maintenance {
-            background-color: rgba(245, 158, 11, 0.15);
-            color: #fbbf24;
-        }
-        .bot-user-handle {
-            font-size: 13px;
-            color: #9ca3af;
-            margin-top: 2px;
-        }
-        .bot-numeric-id {
-            font-size: 11px;
-            color: #4b5563;
-            margin-top: 2px;
-        }
-        .bot-actions-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-        .action-button {
-            padding: 11px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            text-align: center;
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-            display: block;
-        }
-        .btn-blue {
-            background-color: #2563eb;
-            color: #ffffff;
-        }
-        .btn-gray {
-            background-color: #1f2937;
-            color: #ffffff;
-            border: 1px solid #374151;
-        }
-
-        /* Screens Layout Alignment */
-        .profile-layout {
-            text-align: center;
-            padding: 24px 0;
-        }
-        .large-dp-circle {
-            width: 84px;
-            height: 84px;
-            border-radius: 50%;
-            margin: 0 auto 16px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            font-weight: bold;
-            color: #ffffff;
-        }
-        .bg-blue-gradient {
-            background: linear-gradient(135deg, #2563eb, #4f46e5);
-        }
-        .bg-amber-gradient {
-            background: linear-gradient(135deg, #d97706, #ea580c);
-        }
-        .main-heading {
-            font-size: 24px;
-            font-weight: bold;
-            color: #f3f4f6;
-        }
-        .sub-heading {
-            font-size: 14px;
-            color: #3b82f6;
-            margin-top: 4px;
-        }
-
-        /* Info Data Box Styling */
-        .data-table-box {
-            background-color: #111827;
-            border: 1px solid #1f2937;
-            border-radius: 16px;
-            padding: 16px;
-            margin: 20px auto 0 auto;
-            max-width: 350px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            text-align: left;
-        }
-        .data-table-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid rgba(55, 65, 81, 0.4);
-        }
-        .data-table-row:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-        .row-label {
-            color: #9ca3af;
-        }
-        .row-value {
-            color: #e5e7eb;
-            font-weight: 500;
-        }
-        .monospace {
-            font-family: monospace;
-        }
-        .owner-submit-btn {
-            background: linear-gradient(90deg, #ea580c, #d97706);
-            color: #ffffff;
-            font-weight: bold;
-            padding: 12px 36px;
-            border-radius: 12px;
-            border: none;
-            margin-top: 24px;
-            cursor: pointer;
-            font-size: 14px;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        /* FIXED FOOTER NAVBAR */
-        .bottom-nav-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #030712;
-            border-top: 2px solid #1f2937;
-            display: flex;
-            height: 70px;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 99999;
-        }
-        .nav-item-btn {
-            background: none;
-            border: none;
-            color: #6b7280;
-            font-size: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            height: 100%;
-            width: 33.33%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-        }
-        .nav-item-btn svg {
-            width: 22px;
-            height: 22px;
-        }
-        .nav-item-btn.active-tab-highlight {
-            color: #3b82f6 !important;
-        }
-    </style>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cloudflare.com">
 </head>
-<body>
+<body class="bg-[#051318] text-white font-sans selection:bg-teal-500 select-none">
 
-    <!-- SCREEN 1: HOME (BOT LIST) -->
-    <div id="screen-home" class="page-content active-page">
-        <div class="app-header">
-            <h1>Music Bot Collective</h1>
-            <p>All active bots & activities list</p>
-        </div>
-
-        <!-- Bot 1 -->
-        <div class="bot-card">
-            <div class="bot-main-info">
-                <div class="bot-avatar">🎵</div>
-                <div class="bot-text-details">
-                    <div class="bot-title-row">
-                        <span class="bot-title-name">Laado X Music 1</span>
-                        <span class="bot-badge badge-active">Active</span>
-                    </div>
-                    <div class="bot-user-handle">@laado_music_1_bot</div>
-                    <div class="bot-numeric-id">ID: 583920192</div>
-                </div>
-            </div>
-            <div class="bot-actions-grid">
-                <a href="https://t.me" target="_blank" class="action-button btn-blue">Open Bot</a>
-                <a href="https://t.me?startgroup=true" target="_blank" class="action-button btn-gray">Add to Group</a>
-            </div>
-        </div>
-
-        <!-- Bot 2 -->
-        <div class="bot-card">
-            <div class="bot-main-info">
-                <div class="bot-avatar">🎧</div>
-                <div class="bot-text-details">
-                    <div class="bot-title-row">
-                        <span class="bot-title-name">Laado X Music 2</span>
-                        <span class="bot-badge badge-active">Active</span>
-                    </div>
-                    <div class="bot-user-handle">@laado_music_2_bot</div>
-                    <div class="bot-numeric-id">ID: 694021942</div>
-                </div>
-            </div>
-            <div class="bot-actions-grid">
-                <a href="https://t.me" target="_blank" class="action-button btn-blue">Open Bot</a>
-                <a href="https://t.me?startgroup=true" target="_blank" class="action-button btn-gray">Add to Group</a>
-            </div>
-        </div>
-
-        <!-- Bot 3 -->
-        <div class="bot-card">
-            <div class="bot-main-info">
-                <div class="bot-avatar">📻</div>
-                <div class="bot-text-details">
-                    <div class="bot-title-row">
-                        <span class="bot-title-name">Laado X Music Pro</span>
-                        <span class="bot-badge badge-maintenance">Maintenance</span>
-                    </div>
-                    <div class="bot-user-handle">@laado_music_pro_bot</div>
-                    <div class="bot-numeric-id">ID: 739201948</div>
-                </div>
-            </div>
-            <div class="bot-actions-grid">
-                <a href="https://t.me" target="_blank" class="action-button btn-blue">Open Bot</a>
-                <a href="https://t.me?startgroup=true" target="_blank" class="action-button btn-gray">Add to Group</a>
-            </div>
-        </div>
+    <!-- Main Container -->
+    <div class="max-w-md mx-auto p-4 pb-24 min-h-screen flex flex-col justify-between">
         
+        <div>
+            <!-- GLOBAL HEADER STATUS (सभी स्क्रीन्स पर दिखेगा) -->
+            <div class="flex items-center justify-between mb-6 border border-teal-900/40 bg-[#0a1e24] p-3 rounded-xl">
+                <div class="flex items-center gap-2 text-teal-400 font-bold tracking-wider text-sm">
+                    <i class="fa-solid px-1 fa-robot"></i> BOTXHUB
+                </div>
+                <div class="flex items-center gap-2 bg-[#051318] px-3 py-1.5 rounded-lg border border-teal-950 text-xs text-gray-400">
+                    <img id="header-avatar" src="https://placeholder.com" class="w-6 h-6 rounded-full object-cover" alt="profile">
+                    <span id="header-username">Playerpro x Ass...</span>
+                    <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                </div>
+            </div>
+
+            <!-- ================= SCREEN 1: HOME ================= -->
+            <div id="screen-home" class="screen-content">
+                <!-- Title Section -->
+                <div class="flex items-center gap-2 mb-4 border-l-4 border-teal-400 pl-3">
+                    <i class="fa-solid fa-robot text-teal-400 text-lg"></i>
+                    <h2 class="font-bold text-lg tracking-wide">Music Bot Collective</h2>
+                </div>
+                <div class="mb-6">
+                    <span class="bg-teal-950/80 border border-teal-900 text-teal-400 text-xs px-3 py-1 rounded-full font-medium">8 active bots</span>
+                </div>
+
+                <!-- Bot Card 1 -->
+                <div class="bg-[#091b20] border border-teal-950 rounded-2xl p-5 mb-5 shadow-xl">
+                    <div class="flex items-start gap-4 mb-4">
+                        <img src="https://placeholder.com" class="w-14 h-14 rounded-full border border-teal-500/30 object-cover" alt="Bot Logo">
+                        <div>
+                            <h3 class="font-bold text-lg tracking-wide">ANGEL X MUSIC</h3>
+                            <p class="text-xs text-gray-400">@MissQtBot</p>
+                            <div class="mt-2 inline-flex items-center gap-1.5 bg-[#051318] border border-teal-950 px-2.5 py-1 rounded-md text-[11px] text-teal-400">
+                                <i class="fa-solid fa-chart-line text-[10px]"></i> 44,270 monthly users
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-5 font-light">
+                        High quality music player in voice chats - Play any song!
+                    </p>
+                    <div class="flex justify-between items-center text-xs mb-4 text-gray-400 px-1">
+                        <span><i class="fa-solid fa-music mr-1.5 text-xs"></i> Music</span>
+                        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-500"></span> Online</span>
+                    </div>
+                    <div class="flex flex-col gap-2.5">
+                        <button class="w-full bg-[#0e2d35] border border-teal-900/60 py-2.5 rounded-xl font-medium text-sm flex items-center justify-center gap-2">
+                            <i class="fa-regular fa-compass"></i> Open
+                        </button>
+                        <button class="w-full bg-[#1b4332] border border-green-900/40 text-green-300 py-2.5 rounded-xl font-medium text-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-user-plus text-xs"></i> Add to Group
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bot Card 2 -->
+                <div class="bg-[#091b20] border border-teal-950 rounded-2xl p-5 shadow-xl opacity-60">
+                    <div class="flex items-start gap-4">
+                        <img src="https://placeholder.com" class="w-14 h-14 rounded-full border border-teal-500/30 object-cover" alt="Bot Logo">
+                        <div>
+                            <h3 class="font-bold text-lg tracking-wide">NOTY X MUSIC</h3>
+                            <p class="text-xs text-gray-400">@NotyMusicBot</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= SCREEN 2: PROFILE ================= -->
+            <div id="screen-profile" class="screen-content hidden">
+                <div class="border border-teal-950/60 bg-gradient-to-b from-[#071a20] to-[#051318] rounded-[28px] p-6 text-center shadow-2xl flex flex-col items-center">
+                    <div class="w-36 h-36 rounded-full border-2 border-teal-400 p-1 mb-4 shadow-lg shadow-teal-500/10">
+                        <img id="main-avatar" src="https://placeholder.com" class="w-full h-full rounded-full object-cover" alt="User Profile">
+                    </div>
+                    <h2 id="user-fullname" class="font-bold text-xl tracking-wide flex items-center justify-center gap-2 mb-1">
+                        <i class="fa-solid fa-headphones text-sm text-gray-400"></i> ♡ Playerpro x Assistant
+                    </h2>
+                    <div class="text-xs text-gray-400 mb-2"><i class="fa-solid fa-music"></i></div>
+                    <p id="user-username" class="text-sm text-gray-300 font-light mb-1">@PlayerPro_Assistant</p>
+                    <p class="text-xs text-gray-500 tracking-wide mb-8">ID: <span id="user-id">8490025594</span></p>
+
+                    <!-- Data Cards -->
+                    <div class="w-full bg-[#081b20] border border-teal-950/80 rounded-2xl p-4 flex items-center gap-4 mb-4 text-left">
+                        <div class="bg-[#0e2c34] text-teal-400 w-12 h-12 rounded-xl flex items-center justify-center text-xl border border-teal-900/40">
+                            <i class="fa-regular fa-calendar-days"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold tracking-wide">Member Since</p>
+                            <p class="text-base text-gray-400 mt-0.5">2026</p>
+                        </div>
+                    </div>
+                    <div class="w-full bg-[#081b20] border border-teal-950/80 rounded-2xl p-4 flex items-center gap-4 text-left">
+                        <div class="bg-[#0e2c34] text-teal-400 w-12 h-12 rounded-xl flex items-center justify-center text-xl border border-teal-900/40">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold tracking-wide">Bots Accessed</p>
+                            <p class="text-base text-gray-400 mt-0.5">8</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= SCREEN 3: DONATE ================= -->
+            <div id="screen-donate" class="screen-content hidden">
+                <div class="border border-teal-950/60 bg-gradient-to-b from-[#071a20] to-[#051318] rounded-[28px] p-6 text-center shadow-2xl flex flex-col items-center">
+                    <div class="text-rose-500 text-6xl my-4 animate-pulse"><i class="fa-solid fa-heart"></i></div>
+                    <h2 class="font-bold text-3xl tracking-wide mb-4">Donate</h2>
+                    <p class="text-sm text-gray-300 leading-relaxed max-w-[280px] mb-6 font-light">
+                        ✨ Your support keeps our bots getting smarter 🤖💙 — scroll down ⬇️ to donate and don't miss a small message waiting for you at the bottom! ✨
+                    </p>
+                    
+                    <div class="w-full flex justify-start mb-6">
+                        <div class="flex items-center gap-2 bg-[#051318] border border-teal-950 px-3 py-1.5 rounded-lg text-xs text-gray-300">
+                            <i class="fa-solid fa-language text-sm"></i>
+                            <select class="bg-transparent border-none outline-none text-white pr-2">
+                                <option value="en" class="bg-[#051318]">English</option>
+                                <option value="hi" class="bg-[#051318]">Hindi</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="w-full bg-[#081b20] border-2 border-dashed border-teal-950 rounded-2xl p-5 flex flex-col items-center">
+                        <div class="w-14 h-14 bg-teal-500/10 text-teal-400 rounded-full flex items-center justify-center text-3xl mb-3 border border-teal-500/20">
+                            <i class="fa-solid fa-t"></i>
+                        </div>
+                        <p class="text-rose-400 font-bold text-lg tracking-wide mb-2">USDT (TRC20)</p>
+                        <p class="text-xs text-gray-400 tracking-wider break-all mb-4 px-2 font-mono">TD8U9qrd2VtNupKYfQU6...N1Z6iq18RL</p>
+                        <button id="copy-btn" class="bg-[#0e2c34] text-teal-400 border border-teal-900/60 px-6 py-2 rounded-xl text-sm font-medium flex items-center gap-2 active:scale-95 transition-all">
+                            
