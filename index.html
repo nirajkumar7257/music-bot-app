@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Bot Collective</title>
+    <!-- Telegram SDK -->
+    <script src="https://telegram.org"></script>
+    <!-- Tailwind CSS v4 -->
+    <script src="https://jsdelivr.net"></script>
+    <style>
+        body {
+            background-color: var(--tg-theme-bg-color, #111827);
+            color: var(--tg-theme-text-color, #ffffff);
+        }
+        .active-tab {
+            color: var(--tg-theme-link-color, #3b82f6);
+        }
+    </style>
+</head>
+<body class="p-4 font-sans pb-24">
+
+    <!-- PAGE 1: HOME (BOT LIST) -->
+    <div id="page-home" class="page-content">
+        <!-- Header -->
+        <div class="mb-6 flex justify-between items-center">
+            <div>
+                <h1 class="text-xl font-bold text-blue-500">Music Bot Collective</h1>
+                <p class="text-xs text-gray-400">All active bots & activities list</p>
+            </div>
+            <span id="user-top-name" class="text-sm bg-gray-800 px-3 py-1 rounded-full text-gray-300">Hi, User</span>
+        </div>
+
+        <!-- Bot List Container -->
+        <div id="bot-list" class="space-y-4">
+            <!-- Dynamic list will be generated here -->
+        </div>
+    </div>
+
+    <!-- PAGE 2: USER PROFILE -->
+    <div id="page-profile" class="page-content hidden text-center py-8">
+        <!-- User DP (Initial Letter Gradient) -->
+        <div id="user-dp" class="w-24 h-24 bg-gradient-to-tr from-blue-600 to-indigo-500 rounded-full mx-auto flex items-center justify-center text-3xl font-bold text-white mb-4 shadow-lg border-2 border-indigo-400/20">
+            U
+        </div>
+        
+        <h2 id="user-full-name" class="text-2xl font-bold text-gray-100">Telegram User</h2>
+        <p id="user-username-val" class="text-blue-400 text-sm font-medium">@Username</p>
+
+        <!-- Profile Details Box -->
+        <div class="mt-6 p-4 bg-gray-900/60 rounded-2xl border border-gray-800 text-left max-w-sm mx-auto space-y-3 shadow-inner">
+            <div class="flex justify-between border-b border-gray-800/50 pb-2">
+                <span class="text-sm text-gray-400">User ID</span>
+                <span id="user-id-val" class="text-sm font-mono text-gray-200">00000000</span>
+            </div>
+            <div class="flex justify-between border-b border-gray-800/50 pb-2">
+                <span class="text-sm text-gray-400">Chat ID</span>
+                <span id="user-chat-val" class="text-sm font-mono text-gray-200">00000000</span>
+            </div>
+            <div class="flex justify-between border-b border-gray-800/50 pb-2">
+                <span class="text-sm text-gray-400">Premium User</span>
+                <span id="user-premium-val" class="text-sm font-medium text-gray-200">No</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="text-sm text-gray-400">Language</span>
+                <span id="user-lang-val" class="text-sm font-medium text-gray-200">EN</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 3: OWNER DETAILS -->
+    <div id="page-owner" class="page-content hidden text-center py-8">
+        <!-- Owner DP -->
+        <div class="w-24 h-24 bg-gradient-to-tr from-amber-500 to-orange-600 rounded-full mx-auto flex items-center justify-center text-3xl font-bold text-white mb-4 shadow-lg border-2 border-amber-400/20">
+            👑
+        </div>
+        
+        <!-- YAHAN APNA DATA EDIT KAREIN -->
+        <h2 class="text-2xl font-bold text-gray-100">Abhishek Kumar</h2> <!-- Owner Name -->
+        <p class="text-amber-400 text-sm font-medium">@MyOwnerUsername</p> <!-- Owner Username -->
+
+        <!-- Owner Details Box -->
+        <div class="mt-6 p-4 bg-gray-900/60 rounded-2xl border border-gray-800 text-left max-w-sm mx-auto space-y-3 shadow-inner">
+            <div class="flex justify-between border-b border-gray-800/50 pb-2">
+                <span class="text-sm text-gray-400">Owner User ID</span>
+                <span class="text-sm font-mono text-amber-400">987654321</span> <!-- Owner User ID -->
+            </div>
+            <div class="flex justify-between border-b border-gray-800/50 pb-2">
+                <span class="text-sm text-gray-400">Owner Chat ID</span>
+                <span class="text-sm font-mono text-amber-400">987654321</span> <!-- Owner Chat ID -->
+            </div>
+            <div class="flex justify-between">
+                <span class="text-sm text-gray-400">Network Status</span>
+                <span class="text-sm font-medium text-green-400 flex items-center gap-1">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-ping"></span> Main Owner
+                </span>
+            </div>
+        </div>
+
+        <p class="text-gray-400 text-xs max-w-xs mx-auto mt-6 leading-relaxed">
+            For advertisement, promotions, or system configurations, click below to chat.
+        </p>
+
+        <button onclick="window.open('https://t.me', '_blank')" class="mt-6 bg-gradient-to-r from-amber-500 to-orange-500 text-gray-950 font-bold px-8 py-3 rounded-xl shadow-md transition active:scale-95 text-sm">
+            Contact Owner
+        </button>
+    </div>
+
+    <!-- BOTTOM NAVIGATION BAR (3 ICONS) -->
+    <div class="fixed bottom-0 left-0 right-0 bg-gray-950 border-t border-gray-800 flex justify-around py-3 text-gray-500 z-50">
+        <!-- Home Tab -->
+        <button onclick="switchPage('home')" id="tab-home" class="flex flex-col items-center gap-1 active-tab">
+            <svg xmlns="http://w3.org" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            <span class="text-[10px]">Home</span>
+        </button>
+        <!-- Profile Tab -->
+        <button onclick="switchPage('profile')" id="tab-profile" class="flex flex-col items-center gap-1">
+            <svg xmlns="http://w3.org" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            <span class="text-[10px]">User Profile</span>
+        </button>
+        <!-- Owner Tab -->
+        <button onclick="switchPage('owner')" id="tab-owner" class="flex flex-col items-center gap-1">
+            <svg xmlns="http://w3.org" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            <span class="text-[10px]">Owner Details</span>
+        </button>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+
+        // ==========================================
+        // YAHAN APNE BOTS KA DATA DIRECT ADD KAREIN
+        // ==========================================
+        const myMusicBots = [
+            { id: "583920192", name: "Bass Booster Music", username: "bass_boost_music_bot", status: "Active", dp: "🎵" },
+            { id: "694021942", name: "Lo-Fi Beats 24/7", username: "lofi_beats_pro_bot", status: "Active", dp: "🎧" },
+            { id: "739201948", name: "Bollywood Remix Bot", username: "bolly_remix_music_bot", status: "Maintenance", dp: "📻" },
+            { id: "820491823", name: "High-Res Audio Player", username: "hires_music_bot", status: "Active", dp: "💿" }
+        ];
+
+        // Telegram App se dynamic Live User data reading
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            const user = tg.initDataUnsafe.user;
+            
+            document.getElementById('user-top-name').innerText = `Hi, ${user.first_name}`;
+            document.getElementById('user-full-name').innerText = `${user.first_name} ${user.last_name || ''}`;
+            document.getElementById('user-username-val').innerText = user.username ? `@${user.username}` : '@NoUsername';
+            document.getElementById('user-id-val').innerText = user.id;
+            document.getElementById('user-chat-val').innerText = user.id; // User ID hi private Chat ID hoti h
+            document.getElementById('user-premium-val').innerText = user.is_premium ? 'Yes ⭐' : 'No';
+            document.getElementById('user-lang-val').innerText = user.language_code ? user.language_code.toUpperCase() : 'EN';
+            
+            if(user.first_name) {
+                document.getElementById('user-dp').innerText = user.first_name.charAt(0).toUpperCase();
+            }
+        }
+
+        // Home List builder
+        function displayBots(bots) {
+            const listContainer = document.getElementById('bot-list');
+            listContainer.innerHTML = '';
+
+            bots.forEach(bot => {
+                const card = document.createElement('div');
+                card.className = "bg-zinc-900 border border-zinc-800 rounded-2xl p-4 flex flex-col gap-3 shadow-md";
+                const is_active = bot.status === 'Active';
+                const statusBg = is_active ? 'bg-green-500/10 text-green-400' : 'bg-amber-500/10 text-amber-400';
+
+                card.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-full bg-blue-600/20 flex items-center justify-center text-xl border border-blue-500/20">
+                            ${bot.dp}
+                        </div>
+                        <div class="flex-1">
+  
