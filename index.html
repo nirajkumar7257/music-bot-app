@@ -97,6 +97,20 @@
                 document.getElementById('u-lang').innerText = "en";
             }
         }, 5000);
-    </script>
+    </function openBotChat() {
+    const tg = window.Telegram?.WebApp;
+    
+    // Yahan '@MyAwesomeBot' ki jagah apne asli bot ka username likhein
+    const botUsername = "laado_musicbot"; 
+    
+    if (tg) {
+        // Yeh Telegram ke andar hi direct bot ki chat open kar dega
+        tg.openTelegramLink(`https://t.me{botUsername}`);
+    } else {
+        // Agar browser me chal raha hai
+        window.open(`https://t.me{botUsername}`, '_blank');
+    }
+        }
+        >
 </body>
 </html>
