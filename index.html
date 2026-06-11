@@ -25,12 +25,12 @@
         p { margin: 5px 0; font-size: 14px; }
         .bold { font-weight: bold; }
         
-        /* Telegram Styled Button */
+        /* Buttons Style */
         .tg-btn {
             background-color: #2481cc;
             color: white;
             border: none;
-            padding: 10px 15px;
+            padding: 12px 15px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
@@ -42,7 +42,6 @@
         .tg-btn:hover {
             background-color: #1c66a0;
         }
-        /* Owner Button Unique Color (Optional) */
         .owner-btn {
             background-color: #eb4d4b;
         }
@@ -55,7 +54,7 @@
 
     <h2>Welcome to Mini App</h2>
 
-    <!-- Feature 1: User Details (Automatic) -->
+    <!-- Feature 1: User Details -->
     <div class="card" id="user-card">
         <h3>👤 1. User Details (You)</h3>
         <p><span class="bold">Name:</span> <span id="u-name">Loading...</span></p>
@@ -73,75 +72,89 @@
         <button class="tg-btn" onclick="openBotChat()">Message Bot</button>
     </div>
 
-    <!-- Feature 3: App Owner Details (Button Added) -->
+    <!-- Feature 3: App Owner Details -->
     <div class="card" id="owner-card">
         <h3>👑 3. App Owner Details</h3>
         <p><span class="bold">Owner Name:</span> comeback</p>
         <p><span class="bold">Telegram Username:</span> @Comeback_009</p>
-        <p><span class="bold">Support Email:</span> https://t.me/Sangeet_Stream</p>
+        <p><span class="bold">Support:</span> Sangeet Stream</p>
         <button class="tg-btn owner-btn" onclick="openOwnerChat()">Contact Owner</button>
     </div>
 
     <script>
-        function initTelegramApp() {
-            const tg = window.Telegram?.WebApp;
+        // Initialize Telegram WebApp instantly
+        const tg = window.Telegram?.WebApp;
+        if (tg) {
+            tg.ready();
+            tg.expand();
+        }
 
-            if (tg) {
-                tg.ready();
-                tg.expand();
+        function fetchUserData() {
+            if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+                const user = tg.initDataUnsafe.user;
+                
+                // Details fill karein
+                document.getElementById('u-name').innerText = (user.first_name || '') + ' ' + (user.last_name || '');
+                document.getElementById('u-username').innerText = user.username ? '@' + user.username : 'No Username';
+                document.getElementById('u-id').innerText = user.id || 'No ID';
+                document.getElementById('u-lang').innerText = user.language_code || 'en';
+                
+                return true; // Data mil gaya
+            }
+            return false; // Data abhi nahi mila
+        }
 
-                const user = tg.initDataUnsafe?.user;
+        // Try fetching immediately
+        const success = fetchUserData();
 
-                if (user && user.id) {
-                    document.getElementById('u-name').innerText = `${user.first_name} ${user.last_name || ''}`;
-                    document.getElementById('u-username').innerText = user.username ? `@${user.username}` : 'No Username';
-                    document.getElementById('u-id').innerText = user.id;
-                    document.getElementById('u-lang').innerText = user.language_code || 'en';
-                    
+        // Fallback loop agar data slow load hota hai
+        if (!success) {
+            let attempts = 0;
+            const checkInterval = setInterval(() => {
+                attempts++;
+                const hasData = fetchUserData();
+                if (hasData || attempts > 10) {
                     clearInterval(checkInterval);
+                    if (!hasData && document.getElementById('u-id').innerText === "Loading...") {
+                        document.getElementById('u-name').innerText = "Web Browser Mode";
+                        document.getElementById('u-username').innerText = "@not_inside_tg";
+                        document.getElementById('u-id').innerText = "Offline_ID_101";
+                        document.getElementById('u-lang').innerText = "en";
+                    }
                 }
+            }, 500);
+        }
+
+        // Universal Navigation Function to open links securely inside Telegram
+        function navigateToTelegram(linkOrUsername) {
+            let fullUrl = linkOrUsername;
+            
+            // Agar sirf username diya hai toh url banayein
+            if (!linkOrUsername.startsWith('http')) {
+                const cleanUsername = linkOrUsername.replace('@', '').trim();
+                fullUrl = 'https://t.me' + cleanUsername;
+            }
+
+            if (tg && typeof tg.openTelegramLink === 'function') {
+                try {
+                    tg.openTelegramLink(fullUrl);
+                } catch (e) {
+                    tg.openLink(fullUrl); // Backup method
+                }
+            } else {
+                window.open(fullUrl, '_blank'); // Browser backup
             }
         }
 
         // Button Action to Open Bot Chat
         function openBotChat() {
-            const tg = window.Telegram?.WebApp;
-            const botUsername = "laado_musicbot";
-            
-            if (tg) {
-                tg.openTelegramLink(`https://t.me{botUsername}`);
-            } else {
-                window.open(`https://t.me{botUsername}`, '_blank');
-            }
+            navigateToTelegram("laado_musicbot");
         }
 
-        // Button Action to Open Owner Chat
+        // Button Action to Open Owner Chat (Opens the support link directly)
         function openOwnerChat() {
-            const tg = window.Telegram?.WebApp;
-            
-            // ⚠️ Yahan "YourUsername" ko hata kar apna asli telegram username (bina @ ke) likhein
-            const ownerUsername = "Comeback_009"; 
-            
-            if (tg) {
-                tg.openTelegramLink(`https://t.me{ownerUsername}`);
-            } else {
-                window.open(`https://t.me{ownerUsername}`, '_blank');
-            }
+            navigateToTelegram("https://t.meSangeet_Stream"); 
         }
-
-        // Auto-refresh interval to catch data properly
-        const checkInterval = setInterval(initTelegramApp, 500);
-
-        // Fallback for Web Browser Mode after 5 seconds
-        setTimeout(() => {
-            clearInterval(checkInterval);
-            if (document.getElementById('u-id').innerText === "Loading...") {
-                document.getElementById('u-name').innerText = "Web Browser Mode";
-                document.getElementById('u-username').innerText = "@not_inside_tg";
-                document.getElementById('u-id').innerText = "Offline_ID_101";
-                document.getElementById('u-lang').innerText = "en";
-            }
-        }, 5000);
     </script>
 </body>
 </html>
