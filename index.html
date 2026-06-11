@@ -1,181 +1,78 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Bot Store with Owner Details</title>
-    <!-- टेलीग्राम का आवश्यक SDK स्क्रिप्ट -->
+    <title>TG Mini App</title>
+    <!-- Telegram Web App Script -->
     <script src="https://telegram.org"></script>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0b141a; /* डार्क थीम बैकग्राउंड */
-            color: #ffffff;
-            text-align: center;
-            padding: 20px 15px;
+            font-family: Arial, sans-serif;
+            background-color: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #000000);
+            padding: 20px;
             margin: 0;
         }
-        /* ओनर कार्ड की स्टाइलिंग */
-        .owner-card {
-            background: #1c2d38;
-            border-radius: 14px;
+        .card {
+            background: var(--tg-theme-secondary-bg-color, #f0f0f0);
             padding: 15px;
-            margin: 10px auto 25px auto;
-            max-width: 340px;
-            text-align: left;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            border: 1px solid #ffb703; /* ओनर के लिए गोल्डन बॉर्डर */
-            box-sizing: border-box;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        .owner-header {
-            display: flex;
-            align-items: center;
-        }
-        .owner-avatar {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            margin-right: 15px;
-            object-fit: cover;
-            border: 2px solid #ffb703;
-            background: #24303f;
-        }
-        .owner-info h4 {
-            margin: 0;
-            font-size: 16px;
-            color: #ffb703; /* गोल्डन नाम */
-        }
-        .owner-username {
-            margin: 3px 0;
-            font-size: 13px;
-            color: #b1c3cc;
-        }
-        .owner-id {
-            margin: 0;
-            font-size: 11px;
-            color: #8fa0a8;
-        }
-        .owner-badge {
-            background: rgba(255, 183, 3, 0.1);
-            color: #ffb703;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 5px;
-        }
-
-        .section-title {
-            text-align: left;
-            max-width: 340px;
-            margin: 20px auto 10px auto;
-            color: #14ffd6;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        /* म्यूजिक बॉट कार्ड की स्टाइलिंग */
-        .bot-card {
-            background: #15242d;
-            border-radius: 14px;
-            padding: 15px;
-            margin: 12px auto;
-            max-width: 340px;
-            text-align: left;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            box-sizing: border-box;
-        }
-        .bot-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .bot-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            margin-right: 12px;
-            object-fit: cover;
-            background: #24303f;
-            border: 1px solid #14ffd6;
-        }
-        .bot-info h4 { margin: 0; font-size: 16px; color: #ffffff; }
-        .bot-username { margin: 2px 0 0 0; font-size: 13px; color: #8fa0a8; }
-        .bot-desc { font-size: 13px; color: #b1c3cc; margin: 0 0 15px 0; line-height: 1.4; }
-        .open-btn {
-            background-color: #00a884;
-            color: white;
-            border: none;
-            padding: 10px;
-            font-size: 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-        .open-btn:active { background-color: #008f70; }
+        h3 { margin-top: 0; color: #2481cc; }
+        p { margin: 5px 0; font-size: 14px; }
+        .bold { font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <!-- 👑 ओनर डिटेल्स कार्ड 👑 -->
-    <div class="owner-card">
-        <div class="owner-badge">👑 APP OWNER</div>
-        <div class="owner-header">
-            <!-- ⚠️ नीचे MissQtBot की जगह अपना असली टेलीग्राम यूजरनेम डाल लें ताकि आपकी DP लोड हो सके -->
-            <img class="owner-avatar" src="https://img.t.me/i/userpic/320/Comeback_009.jpg" alt="Owner DP" onerror="this.src='https://ui-avatars.com'">
-            
-            <div class="owner-info">
-                <!-- यहाँ अपना नाम और डिटेल्स लिख लें -->
-                <h4>Niraj Kumar</h4>
-                <p class="owner-username">@Comeback_009</p>
-                <p class="owner-id">ID: 7771481658</p>
-            </div>
-        </div>
+    <h2>Welcome to Mini App</h2>
+
+    <!-- Feature 1: User Details (Automatic) -->
+    <div class="card" id="user-card">
+        <h3>👤 1. User Details (You)</h3>
+        <p><span class="bold">Name:</span> <span id="u-name">Loading...</span></p>
+        <p><span class="bold">Username:</span> <span id="u-username">None</span></p>
+        <p><span class="bold">ID:</span> <span id="u-id">Loading...</span></p>
+        <p><span class="bold">Language:</span> <span id="u-lang">Loading...</span></p>
     </div>
 
-    <div class="section-title">🎵 Music Bot Collective</div>
-
-    <!-- बॉट 1 -->
-    <div class="bot-card">
-        <div class="bot-header">
-            <img class="bot-avatar" src="https://t.me/laado_musicbot.jpg" alt="DP" onerror="this.src='https://ui-avatars.com'">
-            <div class="bot-info">
-                <h4>˹ʟᴀᴀᴅᴏ ꭙ ᴍᴜsɪᴄ˼ ♪</h4>
-                <p class="bot-username">@laado_musicbot</p>
-            </div>
-        </div>
-        <p class="bot-desc">High quality music player in voice chats - Play any song!</p>
-        <button class="open-btn" onclick="openBot('laado_musicbot')">➡️ Open Bot</button>
+    <!-- Feature 2: Bot Details (Yahan Apne Bot Ki Details Dalein) -->
+    <div class="card" id="bot-card">
+        <h3>🤖 2. Bot Details</h3>
+        <p><span class="bold">Bot Name:</span> ˹ʟᴀᴀᴅᴏ ꭙ ᴍᴜsɪᴄ˼ ♪</p>
+        <p><span class="bold">Bot Username:</span> @laado_musicbot</p>
+        <p><span class="bold">Status:</span> Active 🟢</p>
     </div>
 
-    <!-- बॉट 2 -->
-    <div class="bot-card">
-        <div class="bot-header">
-            <img class="bot-avatar" src="https://t.me/laado_musicbot.jpg" alt="DP" onerror="this.src='https://ui-avatars.com'">
-            <div class="bot-info">
-                <h4>˹ʟᴀᴀᴅᴏ ꭙ ᴍᴜsɪᴄ˼ ♪</h4>
-                <p class="bot-username">@laado_musicbot</p>
-            </div>
-        </div>
-        <p class="bot-desc">Fast and powerful music streaming bot for Telegram groups.</p>
-        <button class="open-btn" onclick="openBot('laado_musicbot')">➡️ Open Bot</button>
+    <!-- Feature 3: App Owner Details (Yahan Apni Details Dalein) -->
+    <div class="card" id="owner-card">
+        <h3>👑 3. App Owner Details</h3>
+        <p><span class="bold">Owner Name:</span> comeback</p>
+        <p><span class="bold">Telegram Username:</span> @Comeback_009</p>
+        <p><span class="bold">Support Channel:</span> https://t.me/Sangeet_Stream</p>
     </div>
 
     <script>
+        // Telegram Web App Initialize
         const tg = window.Telegram.WebApp;
-        tg.ready();
-        tg.expand();
+        tg.expand(); // App ko full screen karne ke liye
 
-        function openBot(username) {
-            if (tg.HapticFeedback) {
-                tg.HapticFeedback.impactOccurred('medium');
-            }
-            tg.openTelegramLink("https://t.me" + username);
+        // 1. User Details Fetching (Yeh Telegram se automatically user ki details nikalega)
+        const user = tg.initDataUnsafe?.user;
+        if (user) {
+            document.getElementById('u-name').innerText = `${user.first_name} ${user.last_name || ''}`;
+            document.getElementById('u-username').innerText = user.username ? `@${user.username}` : 'No Username';
+            document.getElementById('u-id').innerText = user.id;
+            document.getElementById('u-lang').innerText = user.language_code || 'en';
+        } else {
+            // Agar browser me open hoga toh demo data dikhega
+            document.getElementById('u-name').innerText = "Demo User";
+            document.getElementById('u-username').innerText = "@demo_user";
+            document.getElementById('u-id').innerText = "123456789";
+            document.getElementById('u-lang').innerText = "en";
         }
     </script>
 </body>
