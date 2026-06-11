@@ -101,42 +101,61 @@
             }
         }, 5000);
     </script>
-<!-- बटन का HTML कोड -->
+
+    <!-- दोनों बटन का HTML कोड -->
 <div class="custom-bottom-container">
-    <button class="custom-bottom-btn" onclick="openMyChannel()">चैनल ज्वाइन करें 🚀</button>
+    <button class="custom-bottom-btn channel-btn" onclick="openMyChannel()">चैनल ज्वाइन करें 🚀</button>
+    <button class="custom-bottom-btn group-btn" onclick="openMyGroup()">ग्रुप ज्वाइन करें 💬</button>
 </div>
 
 <style>
-    /* बटन को नीचे फिक्स करने के लिए CSS */
+    /* बटन कंटेनर को नीचे फिक्स करने के लिए */
     .custom-bottom-container {
         position: fixed;
         bottom: 0;
         left: 0;
         width: 100%;
-        padding: 16px;
+        padding: 12px;
         box-sizing: border-box;
-        background-color: #17212b; /* आपके बॉट का डार्क बैकग्राउंड */
+        background-color: #17212b; /* डार्क बैकग्राउंड */
         z-index: 9999;
+        display: flex;
+        flex-direction: column; /* दोनों बटन ऊपर-नीचे दिखेंगे */
+        gap: 8px; /* दोनों बटन के बीच की दूरी */
     }
 
+    /* दोनों बटन का कॉमन डिज़ाइन */
     .custom-bottom-btn {
         width: 100%;
-        padding: 14px;
-        background-color: #2481cc; /* टेलीग्राम का नीला रंग */
+        padding: 12px;
         color: #ffffff;
         border: none;
         border-radius: 10px;
         font-size: 16px;
         font-weight: bold;
         cursor: pointer;
+        transition: background 0.2s ease;
     }
 
-    .custom-bottom-btn:active {
+    /* चैनल बटन का नीला रंग */
+    .channel-btn {
+        background-color: #2481cc;
+    }
+    .channel-btn:active {
         background-color: #1a659e;
     }
 
+    /* ग्रुप बटन का हरा या अलग रंग (ताकि दोनों अलग दिखें) */
+    .group-btn {
+        background-color: #2ea64f; 
+    }
+    .group-btn:active {
+        background-color: #217838;
+    }
+
+    /* कंटेंट को बटन के पीछे छुपने से रोकने के लिए */
     body {
-        padding-bottom: 80px !important; /* ताकि नीचे का कंटेंट बटन के पीछे न छुपे */
+        padding-bottom: 130px !important; /* दो बटन के लिए स्पेस बढ़ाया है */
     }
 </style>
 
@@ -144,13 +163,17 @@
 <script src="https://telegram.org"></script>
 
 <script>
-    // टेलीग्राम वेब ऐप को इनिशियलाइज करें
     const tg = window.Telegram.WebApp;
-    tg.expand(); // ऐप को पूरी स्क्रीन पर खोलने के लिए
+    tg.expand();
 
+    // चैनल का लिंक यहाँ डालें
     function openMyChannel() {
-        // यहाँ अपने टेलीग्राम चैनल का पूरा लिंक डालें
         tg.openTelegramLink("https://t.me/Sangeet_Stream"); 
+    }
+
+    // अपने टेलीग्राम ग्रुप का लिंक यहाँ `YOUR_GROUP_LINK` की जगह डालें
+    function openMyGroup() {
+        tg.openTelegramLink("https://t.me/sapna_quiz"); 
     }
 </script>
     
