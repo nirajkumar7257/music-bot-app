@@ -101,5 +101,58 @@
             }
         }, 5000);
     </script>
+<!-- बटन का HTML कोड -->
+<div class="custom-bottom-container">
+    <button class="custom-bottom-btn" onclick="openMyChannel()">चैनल ज्वाइन करें 🚀</button>
+</div>
+
+<style>
+    /* बटन को नीचे फिक्स करने के लिए CSS */
+    .custom-bottom-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 16px;
+        box-sizing: border-box;
+        background-color: #17212b; /* आपके बॉट का डार्क बैकग्राउंड */
+        z-index: 9999;
+    }
+
+    .custom-bottom-btn {
+        width: 100%;
+        padding: 14px;
+        background-color: #2481cc; /* टेलीग्राम का नीला रंग */
+        color: #ffffff;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .custom-bottom-btn:active {
+        background-color: #1a659e;
+    }
+
+    body {
+        padding-bottom: 80px !important; /* ताकि नीचे का कंटेंट बटन के पीछे न छुपे */
+    }
+</style>
+
+<!-- टेलीग्राम का जावास्क्रिप्ट SDK -->
+<script src="https://telegram.org"></script>
+
+<script>
+    // टेलीग्राम वेब ऐप को इनिशियलाइज करें
+    const tg = window.Telegram.WebApp;
+    tg.expand(); // ऐप को पूरी स्क्रीन पर खोलने के लिए
+
+    function openMyChannel() {
+        // यहाँ अपने टेलीग्राम चैनल का पूरा लिंक डालें
+        tg.openTelegramLink("https://t.me/Sangeet_Stream"); 
+    }
+</script>
+    
 </body>
 </html>
