@@ -102,10 +102,11 @@
         }, 5000);
     </script>
 
-    <!-- दोनों बटन का HTML कोड -->
+    <!-- तीनों बटनों का HTML कोड -->
 <div class="custom-bottom-container">
-    <button class="custom-bottom-btn channel-btn" onclick="openMyChannel()">चैनल ज्वाइन करें 🚀</button>
-    <button class="custom-bottom-btn group-btn" onclick="openMyGroup()">ग्रुप ज्वाइन करें 💬</button>
+    <button class="custom-bottom-btn channel-btn" onclick="openMyChannel()">channel 🚀</button>
+    <button class="custom-bottom-btn group-btn" onclick="openMyGroup()">group 💬</button>
+    <button class="custom-bottom-btn third-btn" onclick="openThirdLink()">help 🛠️</button>
 </div>
 
 <style>
@@ -115,29 +116,32 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        padding: 12px;
+        padding: 10px;
         box-sizing: border-box;
         background-color: #17212b; /* डार्क बैकग्राउंड */
         z-index: 9999;
         display: flex;
-        flex-direction: column; /* दोनों बटन ऊपर-नीचे दिखेंगे */
-        gap: 8px; /* दोनों बटन के बीच की दूरी */
+        flex-direction: row; /* तीनों बटन एक ही लाइन में अगल-बगल दिखेंगे */
+        gap: 6px; /* बटनों के बीच की दूरी */
+        justify-content: space-between;
     }
 
-    /* दोनों बटन का कॉमन डिज़ाइन */
+    /* बटनों का छोटा और सुंदर डिज़ाइन */
     .custom-bottom-btn {
-        width: 100%;
-        padding: 12px;
+        flex: 1; /* तीनों बटनों को बराबर साइज़ देने के लिए */
+        padding: 10px 5px; /* साइज़ छोटा करने के लिए पैडिंग कम की है */
         color: #ffffff;
         border: none;
-        border-radius: 10px;
-        font-size: 16px;
+        border-radius: 8px;
+        font-size: 13px; /* फॉन्ट साइज़ छोटा किया है ताकि टेक्स्ट फिट आ जाए */
         font-weight: bold;
         cursor: pointer;
+        white-space: nowrap; /* टेक्स्ट को नीचे की लाइन में जाने से रोकने के लिए */
+        text-align: center;
         transition: background 0.2s ease;
     }
 
-    /* चैनल बटन का नीला रंग */
+    /* पहला बटन: चैनल (नीला रंग) */
     .channel-btn {
         background-color: #2481cc;
     }
@@ -145,7 +149,7 @@
         background-color: #1a659e;
     }
 
-    /* ग्रुप बटन का हरा या अलग रंग (ताकि दोनों अलग दिखें) */
+    /* दूसरा बटन: ग्रुप (हरा रंग) */
     .group-btn {
         background-color: #2ea64f; 
     }
@@ -153,9 +157,17 @@
         background-color: #217838;
     }
 
-    /* कंटेंट को बटन के पीछे छुपने से रोकने के लिए */
+    /* तीसरा बटन: (बैंगनी/पर्पल रंग) */
+    .third-btn {
+        background-color: #6c5ce7; 
+    }
+    .third-btn:active {
+        background-color: #5b4cc4;
+    }
+
+    /* पेज का कंटेंट बटनों के पीछे न छुपे */
     body {
-        padding-bottom: 130px !important; /* दो बटन के लिए स्पेस बढ़ाया है */
+        padding-bottom: 70px !important; /* अगल-बगल होने से नीचे सिर्फ कम स्पेस चाहिए */
     }
 </style>
 
@@ -166,16 +178,22 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    // चैनल का लिंक यहाँ डालें
+    // 1. चैनल का लिंक
     function openMyChannel() {
         tg.openTelegramLink("https://t.me/Sangeet_Stream"); 
     }
 
-    // अपने टेलीग्राम ग्रुप का लिंक यहाँ `YOUR_GROUP_LINK` की जगह डालें
+    // 2. ग्रुप का लिंक
     function openMyGroup() {
         tg.openTelegramLink("https://t.me/sapna_quiz"); 
     }
+
+    // 3. तीसरे बटन का लिंक यहाँ `YOUR_THIRD_LINK` की जगह डालें
+    function openThirdLink() {
+        tg.openTelegramLink("https://t.me/Comeback_009"); 
+    }
 </script>
+    
     
 </body>
 </html>
