@@ -24,6 +24,21 @@
         h3 { margin-top: 0; color: #2481cc; }
         p { margin: 5px 0; font-size: 14px; }
         .bold { font-weight: bold; }
+        
+        /* 🌟 प्रोफाइल फोटो के लिए नया डिज़ाइन */
+        .avatar-container {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid #2481cc;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
@@ -34,6 +49,13 @@
     <!-- Feature 1: User Details -->
     <div class="card" id="user-card">
         <h3>👤 User Details (You)</h3>
+        
+        <!-- 🌟 नया प्रोफाइल फोटो का सेक्शन -->
+        <div class="avatar-container">
+            <!-- शुरू में एक डिफ़ॉल्ट यूजर इमेज लोड होगी -->
+            <img id="u-avatar" class="user-avatar" src="https://cloudflare.com" alt="User DP">
+        </div>
+
         <p><span class="bold">Name:</span> <span id="u-name">Loading...</span></p>
         <p><span class="bold">Username:</span> <span id="u-username">Loading...</span></p>
         <p><span class="bold">ID:</span> <span id="u-id">Loading...</span></p>
@@ -69,11 +91,11 @@
             const tg = window.Telegram?.WebApp;
 
             if (tg) {
-                tg.ready(); //
-                tg.expand(); //
+                tg.ready(); 
+                tg.expand(); 
 
                 // Data fetch karne ki koshish karein
-                const user = tg.initDataUnsafe?.user; //
+                const user = tg.initDataUnsafe?.user; 
 
                 if (user && user.id) {
                     // Agar user mil gaya toh loading hatao aur details dikhao
@@ -81,6 +103,11 @@
                     document.getElementById('u-username').innerText = user.username ? `@${user.username}` : 'No Username';
                     document.getElementById('u-id').innerText = user.id;
                     document.getElementById('u-lang').innerText = user.language_code || 'en';
+                    
+                    // 🌟 अगर टेलीग्राम यूजर की फोटो का यूआरएल देता है तो उसे अपडेट करें
+                    if (user.photo_url) {
+                        document.getElementById('u-avatar').src = user.photo_url;
+                    }
                     
                     // Interval ko rokne ke liye
                     clearInterval(checkInterval);
@@ -99,6 +126,8 @@
                 document.getElementById('u-username').innerText = "@not_inside_tg";
                 document.getElementById('u-id').innerText = "Offline_ID_101";
                 document.getElementById('u-lang').innerText = "en";
+                // ब्राउज़र मोड में एक फूल वाली डिफ़ॉल्ट इमेज दिखेगी
+                document.getElementById('u-avatar').src = "https://cloudflare.com";
             }
         }, 5000);
     </script>
@@ -194,7 +223,6 @@
         tg.openTelegramLink("https://t.me/Comeback_009"); 
     }
 </script>
-    
     
 </body>
 </html>
