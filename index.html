@@ -133,14 +133,14 @@
     </script>
 <!-- छह रंग-बिरंगे बटनों का नया HTML कोड -->
 <div class="custom-bottom-container">
-    <button class="custom-bottom-btn channel-btn" onclick="openMyChannel(event)" ontouchstart="openMyChannel(event)">channel 🚀</button>
-    <button class="custom-bottom-btn group-btn" onclick="openMyGroup(event)" ontouchstart="openMyGroup(event)">group 💬</button>
-    <button class="custom-bottom-btn third-btn" onclick="openThirdLink(event)" ontouchstart="openThirdLink(event)">help 🛠️</button>
-    
-    <!-- नए 3 बॉट्स के बटन्स -->
     <button class="custom-bottom-btn bot1-btn" onclick="openBot1(event)" ontouchstart="openBot1(event)">bot 1 🤖</button>
     <button class="custom-bottom-btn bot2-btn" onclick="openBot2(event)" ontouchstart="openBot2(event)">bot 2 🤖</button>
     <button class="custom-bottom-btn bot3-btn" onclick="openBot3(event)" ontouchstart="openBot3(event)">bot 3 🤖</button>
+    
+    <!-- नए 3 बॉट्स के बटन्स -->
+    <button class="custom-bottom-btn channel-btn" onclick="openMyChannel(event)" ontouchstart="openMyChannel(event)">channel 🚀</button>
+    <button class="custom-bottom-btn group-btn" onclick="openMyGroup(event)" ontouchstart="openMyGroup(event)">group 💬</button>
+    <button class="custom-bottom-btn third-btn" onclick="openThirdLink(event)" ontouchstart="openThirdLink(event)">help 🛠️</button>
 </div>
 
 <style>
@@ -176,30 +176,30 @@
         -webkit-tap-highlight-color: transparent; /* मोबाइल टच रिस्पॉन्स को फ़ास्ट करने के लिए */
     }
 
-    /* 1. चैनल बटन: नीला (Blue) */
-    .channel-btn { background-color: #2481cc; }
-    .channel-btn:active { background-color: #1a659e; }
-
-    /* 2. ग्रुप बटन: गहरा हरा (Dark Green) */
-    .group-btn { background-color: #2ea64f; }
-    .group-btn:active { background-color: #217838; }
-
-    /* 3. हेल्प बटन: बैंगनी (Purple) */
-    .third-btn { background-color: #6c5ce7; }
-    .third-btn:active { background-color: #5b4cc4; }
-
-    /* 4. बॉट 1 बटन: संतरा रंग (Orange) */
+    /* 1. बॉट 1 बटन: संतरा रंग (Orange) */
     .bot1-btn { background-color: #e67e22; }
     .bot1-btn:active { background-color: #d35400; }
 
-    /* 5. बॉट 2 बटन: गुलाबी/लाल रंग (Pinkish Red) */
+    /* 2. बॉट 2 बटन: गुलाबी/लाल रंग (Pinkish Red) */
     .bot2-btn { background-color: #e84393; }
     .bot2-btn:active { background-color: #c2185b; }
 
-    /* 6. बॉट 3 बटन: फिरोजी/लाइट ग्रीन (Teal/Mint Green) */
+    /* 3. बॉट 3 बटन: फिरोजी/लाइट ग्रीन (Teal/Mint Green) */
     .bot3-btn { background-color: #10b981; }
     .bot3-btn:active { background-color: #059669; }
 
+    /* 4. चैनल बटन: नीला (Blue) */
+    .channel-btn { background-color: #2481cc; }
+    .channel-btn:active { background-color: #1a659e; }
+
+    /* 5. ग्रुप बटन: गहरा हरा (Dark Green) */
+    .group-btn { background-color: #2ea64f; }
+    .group-btn:active { background-color: #217838; }
+
+    /* 6. हेल्प बटन: बैंगनी (Purple) */
+    .third-btn { background-color: #6c5ce7; }
+    .third-btn:active { background-color: #5b4cc4; }
+    
     /* पेज का कंटेंट बटनों के पीछे न छुपे */
     body {
         padding-bottom: 95px !important; 
@@ -232,34 +232,35 @@
         }
     }
 
-    // 1. चैनल का लिंक
-    function openMyChannel(e) {
-        handleNavigation(e, "https://t.me/Sangeet_Stream"); 
-    }
 
-    // 2. ग्रुप का लिंक
-    function openMyGroup(e) {
-        handleNavigation(e, "https://t.me/sapna_quiz"); 
-    }
-
-    // 3. तीसरे हेल्प बटन का लिंक
-    function openThirdLink(e) {
-        handleNavigation(e, "https://t.me/Comeback_009"); 
-    }
-
-    // 4. Bot 1 का लिंक
+    // 1. Bot 1 का लिंक
     function openBot1(e) {
         handleNavigation(e, "https://t.me/laado_musicbot");
     }
 
-    // 5. Bot 2 का लिंक
+    // 2. Bot 2 का लिंक
     function openBot2(e) {
         handleNavigation(e, "https://t.me/PlayerPro_MusicBot");
     }
 
-    // 6. Bot 3 का लिंक
+    // 3. Bot 3 का लिंक
     function openBot3(e) {
         handleNavigation(e, "https://t.me/Kuku_MusicBot");
+    }
+
+    // 4. चैनल का लिंक
+    function openMyChannel(e) {
+        handleNavigation(e, "https://t.me/Sangeet_Stream"); 
+    }
+
+    // 5. ग्रुप का लिंक
+    function openMyGroup(e) {
+        handleNavigation(e, "https://t.me/sapna_quiz"); 
+    }
+
+    // 6. तीसरे हेल्प बटन का लिंक
+    function openThirdLink(e) {
+        handleNavigation(e, "https://t.me/Comeback_009"); 
     }
 </script>
     
