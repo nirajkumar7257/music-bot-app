@@ -626,4 +626,121 @@
             }
         }, 5000);
 
-        // Theme Management Fun
+        // Theme Management Functions
+        function openThemeModal() {
+            document.getElementById('themeModalOverlay').style.display = 'flex';
+        }
+
+        function closeThemeModal() {
+            document.getElementById('themeModalOverlay').style.display = 'none';
+        }
+
+        function setTheme(themeName, element) {
+            // Remove previous theme
+            document.body.classList.remove('light-theme', 'dark-theme', 'green-theme', 'purple-theme', 'ocean-theme');
+            
+            // Add new theme
+            document.body.classList.add(themeName);
+            
+            // Update active state
+            document.querySelectorAll('.theme-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            element.classList.add('active');
+            
+            // Save to localStorage
+            localStorage.setItem('selectedTheme', themeName);
+        }
+
+        // Load saved theme on page load
+        window.addEventListener('load', () => {
+            const savedTheme = localStorage.getItem('selectedTheme') || 'light-theme';
+            document.body.classList.remove('light-theme', 'dark-theme', 'green-theme', 'purple-theme', 'ocean-theme');
+            document.body.classList.add(savedTheme);
+            
+            // Update active indicator
+            document.querySelectorAll('.theme-option').forEach(opt => {
+                if (opt.getAttribute('data-theme') === savedTheme) {
+                    opt.classList.add('active');
+                }
+            });
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('themeModalOverlay').addEventListener('click', (e) => {
+            if (e.target.id === 'themeModalOverlay') {
+                closeThemeModal();
+            }
+        });
+    </script>
+
+    <!-- छह रंग-बिरंगे बटनों का HTML कोड -->
+    <div class="custom-bottom-container">
+        <button class="custom-bottom-btn bot1-btn" onclick="openBot1(event)" ontouchstart="openBot1(event)">Bot 1</button>
+        <button class="custom-bottom-btn bot2-btn" onclick="openBot2(event)" ontouchstart="openBot2(event)">Bot 2</button>
+        <button class="custom-bottom-btn bot3-btn" onclick="openBot3(event)" ontouchstart="openBot3(event)">Bot 3</button>
+        
+        <!-- नए 3 बॉट्स के बटन्स -->
+        <button class="custom-bottom-btn channel-btn" onclick="openMyChannel(event)" ontouchstart="openMyChannel(event)">Update</button>
+        <button class="custom-bottom-btn group-btn" onclick="openMyGroup(event)" ontouchstart="openMyGroup(event)">Support</button>
+        <button class="custom-bottom-btn third-btn" onclick="openThirdLink(event)" ontouchstart="openThirdLink(event)">Help</button>
+    </div>
+
+    <!-- टेलीग्राम का जावास्क्रिप्ट SDK -->
+    <script src="https://telegram.org"></script>
+
+    <script>
+        // टेलीग्राम वेब ऐप को तुरंत इनिशियलाइज करना
+        const tg = window.Telegram.WebApp;
+        
+        // यह टेलीग्राम को बताता है कि ऐप लोड हो चुका है
+        tg.ready();
+        tg.expand();
+
+        // डबल क्लिक या टच लैग को रोकने के लिए हेल्पर फ़ंक्शन
+        function handleNavigation(e, url) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            // टेलीग्राम SDK के ज़रिए लिंक खोलना
+            if (tg && typeof tg.openTelegramLink === 'function') {
+                tg.openTelegramLink(url);
+            } else {
+                window.open(url, '_blank');
+            }
+        }
+
+        // 1. Bot 1 का लिंक
+        function openBot1(e) {
+            handleNavigation(e, "https://t.me/laado_musicbot?start=_tgr_CR8ielg0YTJl");
+        }
+
+        // 2. Bot 2 का लिंक
+        function openBot2(e) {
+            handleNavigation(e, "https://t.me/PlayerPro_MusicBot?start=_tgr_C62RiaZlNTVl");
+        }
+
+        // 3. Bot 3 का लिंक
+        function openBot3(e) {
+            handleNavigation(e, "https://t.me/Kuku_MusicBot?start=_tgr_6kQXhMQ1MzQ9");
+        }
+
+        // 4. चैनल का लिंक
+        function openMyChannel(e) {
+            handleNavigation(e, "https://t.me/Sangeet_Stream"); 
+        }
+
+        // 5. ग्रुप का लिंक
+        function openMyGroup(e) {
+            handleNavigation(e, "https://t.me/sapna_quiz"); 
+        }
+
+        // 6. तीसरे हेल्प बटन का लिंक
+        function openThirdLink(e) {
+            handleNavigation(e, "https://t.me/Comeback_009"); 
+        }
+    </script>
+</body>
+</html>
