@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TG Mini App</title>
-    <!-- Telegram Web App Script (Head me load hona jaroori hai) -->
+    <!-- Telegram Web App Script -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
@@ -14,22 +14,36 @@
             padding: 20px;
             margin: 0;
         }
+
         .card {
-            background: var(--tg-theme-secondary-bg-color, #f0f0f0);
+            background: #ffffff;
             padding: 15px;
             border-radius: 10px;
             margin-bottom: 15px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        h3 { margin-top: 0; color: #2481cc; }
-        p { margin: 5px 0; font-size: 14px; }
-        .bold { font-weight: bold; }
-        
-        /* 🌟 प्रोफाइल फोटो के लिए नया डिज़ाइन */
+
+        h3 { 
+            margin-top: 0; 
+            color: #2481cc; 
+        }
+
+        p { 
+            margin: 5px 0; 
+            font-size: 14px; 
+            color: #000000;
+        }
+
+        .bold { 
+            font-weight: bold; 
+        }
+
+        /* Profile Photo Design */
         .avatar-container {
             text-align: center;
             margin-bottom: 15px;
         }
+
         .user-avatar {
             width: 80px;
             height: 80px;
@@ -39,102 +53,276 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
             margin: 0 auto;
         }
+
+        /* Chat Box - Uniform Size */
+        .chat-box {
+            width: 100%;
+            max-width: 400px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            padding: 15px;
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+
+        /* Message Row */
+        .chat-message-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        /* Profile Picture */
+        .chat-dp {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 2px solid #e0e0e0;
+        }
+
+        /* Message Content Wrapper */
+        .message-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            max-width: calc(100% - 57px);
+            width: 100%;
+        }
+
+        /* User Name */
+        .user-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #555555;
+            margin-bottom: 4px;
+        }
+
+        /* Message Bubble */
+        .message-bubble {
+            background-color: #f1f0f0;
+            color: #000000;
+            padding: 10px 12px;
+            border-radius: 0px 12px 12px 12px;
+            font-size: 13px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        /* Message Time */
+        .message-time {
+            font-size: 11px;
+            color: #999999;
+            margin-top: 4px;
+            align-self: flex-end;
+        }
+
+        /* Button Container */
+        .button-container {
+            text-align: center;
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        /* Help Button / My Button */
+        .help-button,
+        .my-button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 6px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .help-button:hover,
+        .my-button:hover {
+            background-color: #45a049;
+        }
+
+        /* User Details Card with 2-color design */
+        #user-card {
+            background: transparent;
+            padding: 0;
+            box-shadow: none;
+            margin-bottom: 15px;
+        }
+
+        .user-details-box {
+            width: 100%;
+            max-width: 400px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .user-details-header {
+            background: linear-gradient(135deg, #2481cc 0%, #1a5fa0 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .user-details-header h3 {
+            margin: 0;
+            color: white;
+            font-size: 16px;
+        }
+
+        .user-details-content {
+            padding: 15px;
+        }
+
+        .user-details-content .avatar-container {
+            margin-bottom: 15px;
+        }
+
+        .user-details-content p {
+            margin: 8px 0;
+            font-size: 13px;
+            color: #000000;
+        }
     </style>
 </head>
 <body>
-
     <h2>Welcome dear 👀</h2>
     <h4>🎧 Looking For A Music Bot? ✨Fast • Smooth • 24/7 Active, Play 🔍 Your Favorite Songs Instantly, Enjoy Music Without Hassle 🎶 Try It Once, You'll Love It 💞</h4>
-
+    
     <!-- Feature 1: User Details -->
-    <div class="card" id="user-card">
-        <h3>👤 User Details (You)</h3>
-        
-        <!-- 🌟 नया प्रोफाइल फोटो का सेक्शन -->
-        <div class="avatar-container">
-            <!-- शुरू में एक डिफ़ॉल्ट यूजर इमेज लोड होगी -->
-            <img id="u-avatar" class="user-avatar" src="https://cloudflare.com" alt="User DP">
-        </div>
+    <div id="user-card">
+        <div class="user-details-box">
+            <div class="user-details-header">
+                <h3>👤 User Details (You)</h3>
+            </div>
+            <div class="user-details-content">
+                <div class="avatar-container">
+                    <img id="u-avatar" class="user-avatar" src="https://cloudflare.com" alt="User DP">
+                </div>
 
-        <p><span class="bold">Name:</span> <span id="u-name">Loading...</span></p>
-        <p><span class="bold">Username:</span> <span id="u-username">Loading...</span></p>
-        <p><span class="bold">ID:</span> <span id="u-id">Loading...</span></p>
-        <p><span class="bold">Language:</span> <span id="u-lang">Loading...</span></p>
+                <p><span class="bold">Name:</span> <span id="u-name">Loading...</span></p>
+                <p><span class="bold">Username:</span> <span id="u-username">Loading...</span></p>
+                <p><span class="bold">ID:</span> <span id="u-id">Loading...</span></p>
+                <p><span class="bold">Language:</span> <span id="u-lang">Loading...</span></p>
+            </div>
+        </div>
     </div>
 
-    <body>
-        <h2>🤖 Music Bot Collective</h2>
+    <h2>🤖 Music Bot Collective</h2>
 
-        <div class="card" id="active-card">
+    <!-- Active Bots Card -->
+    <div class="card" id="active-card">
         <h3>Total Bots 10</h3>
         <p><span class="bold">Active Bots:</span> 03</p>
+    </div>
+
+    <!-- Chat Box 1: Laado Music -->
+    <div class="card" id="online-card">
+        <div class="chat-box">
+            <div class="chat-message-row">
+                <img src="laado-music.png" alt="User Avatar" class="chat-dp">
+                <div class="message-content-wrapper">
+                    <div class="user-name">˹ʟᴀᴀᴅᴏ ꭙ ᴍᴜsɪᴄ˼ ♪</div>
+                    <div class="message-bubble">Username: @laado_musicbot</div>
+                    <div class="message-time">🟢 Online</div>
+                    <div class="button-container">
+                        <a href="https://t.me/laado_musicbot?startgroup=true" class="help-button">ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ᴄʜᴀᴛ</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    <body>
-        
-    <!-- Feature 2: Bot Details -->
-    <div class="card" id="bot-card">
-        <h3>🤖 Bot 1 Details</h3>
-        <p><span class="bold">Bot Name:</span> ˹ʟᴀᴀᴅᴏ ꭙ ᴍᴜsɪᴄ˼ ♪</p>
-        <p><span class="bold">Bot Username:</span> @laado_musicbot</p>
-        <p><span class="bold">Status:</span> ● online</p>
+    </div>
+
+    <!-- Chat Box 2: PlayerPro Music -->
+    <div class="card" id="open-card">
+        <div class="chat-box">
+            <div class="chat-message-row">
+                <img src="playerpro-music.png" alt="User Avatar" class="chat-dp">
+                <div class="message-content-wrapper">
+                    <div class="user-name">𝗣𝗅𝗮𝘺𝘦𝘳𝘱𝙧𝘰 ꭙ 𝗠𝑢𝑠𝑖𝑐 ♪</div>
+                    <div class="message-bubble">Username: @PlayerPro_MusicBot</div>
+                    <div class="message-time">🟢 Online</div>
+                    <div class="button-container">
+                        <a href="https://t.me/PlayerPro_MusicBot?startgroup=true" class="help-button">ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ᴄʜᴀᴛ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Box 3: Kuku Music -->
+    <div class="card" id="one-card">
+        <div class="chat-box">
+            <div class="chat-message-row">
+                <img src="kuku-music.png" alt="User Avatar" class="chat-dp">
+                <div class="message-content-wrapper">
+                    <div class="user-name">˹ᴋᴜᴋᴜ ꭙ ᴍᴜꜱɪᴄ˼ ♪</div>
+                    <div class="message-bubble">Username: @Kuku_MusicBot</div>
+                    <div class="message-time">🟢 Online</div>
+                    <div class="button-container">
+                        <a href="https://t.me/Kuku_MusicBot?startgroup=true" class="help-button">ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ᴄʜᴀᴛ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- Feature 3: App developer Details -->
+    <div class="card" id="developer-card">
+        <h3>Developer & Support</h3>
     </div>
     
-    <div class="card" id="bot-card">
-        <h3>🤖 Bot 2 Details</h3>
-        <p><span class="bold">Bot Name:</span> 𝗣𝗅𝗮𝘺𝘦𝘳𝘱𝙧𝘰 ꭙ 𝗠𝑢𝑠𝑖𝑐 ♪</p>
-        <p><span class="bold">Bot Username:</span> @PlayerPro_MusicBot</p>
-        <p><span class="bold">Status:</span> ● online</p>
-   </div>
-
-    <div class="card" id="bot-card">
-        <h3>🤖 Bot 3 Details</h3>
-        <p><span class="bold">Bot Name:</span> ˹ᴋᴜᴋᴜ ꭙ ᴍᴜꜱɪᴄ˼ ♪</p>
-        <p><span class="bold">Bot Username:</span> @Kuku_MusicBot</p>
-        <p><span class="bold">Status:</span> ● online</p>
-        </div>
-
-    <!-- Feature 3: App Owner Details -->
+    <!-- Chat Box 4: Owner details-->
     <div class="card" id="owner-card">
-        <h3>Developer & Support</h3>
-        <p><span class="bold">Owner Name:</span> Niraj</p>
-        <p><span class="bold">Telegram Username:</span> @Comeback_009</p>
-        <p><span class="bold">Support:</span> https://t.me/Sangeet_Stream</p>
+        <div class="chat-box">
+            <div class="chat-message-row">
+                <img src="my-dp.png" alt="User Avatar" class="chat-dp">
+                <div class="message-content-wrapper">
+                    <div class="user-name">Niraj Kumar</div>
+                    <div class="message-bubble">Username: @Comeback_009</div>
+                    <div class="message-time">ID: 7771481658</div>
+                    <div class="button-container">
+                        <a href="https://t.me/Comeback_009" class="my-button">any issue dm ♂️</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
         function initTelegramApp() {
-            // Telegram WebApp Object Check
             const tg = window.Telegram?.WebApp;
 
             if (tg) {
-                tg.ready(); 
-                tg.expand(); 
+                tg.ready();
+                tg.expand();
 
-                // Data fetch karne ki koshish karein
-                const user = tg.initDataUnsafe?.user; 
+                const user = tg.initDataUnsafe?.user;
 
                 if (user && user.id) {
-                    // Agar user mil gaya toh loading hatao aur details dikhao
                     document.getElementById('u-name').innerText = `${user.first_name} ${user.last_name || ''}`;
                     document.getElementById('u-username').innerText = user.username ? `@${user.username}` : 'No Username';
                     document.getElementById('u-id').innerText = user.id;
                     document.getElementById('u-lang').innerText = user.language_code || 'en';
-                    
-                    // 🌟 अगर टेलीग्राम यूजर की फोटो का यूआरएल देता है तो उसे अपडेट करें
+
                     if (user.photo_url) {
                         document.getElementById('u-avatar').src = user.photo_url;
                     }
-                    
-                    // Interval ko rokne ke liye
+
                     clearInterval(checkInterval);
                 }
             }
         }
 
-        // Agar data slow load ho raha hai, toh yeh har 500ms (0.5 second) me check karega
         const checkInterval = setInterval(initTelegramApp, 500);
 
-        // Max 5 seconds tak check karega, agar fir bhi nahi mila toh Browser mode default data dikhayega
         setTimeout(() => {
             clearInterval(checkInterval);
             if (document.getElementById('u-id').innerText === "Loading...") {
@@ -142,21 +330,21 @@
                 document.getElementById('u-username').innerText = "@not_inside_tg";
                 document.getElementById('u-id').innerText = "Offline_ID_101";
                 document.getElementById('u-lang').innerText = "en";
-                // ब्राउज़र मोड में एक फूल वाली डिफ़ॉल्ट इमेज दिखेगी
                 document.getElementById('u-avatar').src = "https://cloudflare.com";
             }
         }, 5000);
     </script>
-<!-- छह रंग-बिरंगे बटनों का नया HTML कोड -->
+
+    <!-- छह रंग-बिरंगे बटनों का नया HTML कोड -->
 <div class="custom-bottom-container">
     <button class="custom-bottom-btn bot1-btn" onclick="openBot1(event)" ontouchstart="openBot1(event)">Bot 1</button>
     <button class="custom-bottom-btn bot2-btn" onclick="openBot2(event)" ontouchstart="openBot2(event)">Bot 2</button>
     <button class="custom-bottom-btn bot3-btn" onclick="openBot3(event)" ontouchstart="openBot3(event)">Bot 3</button>
     
     <!-- नए 3 बॉट्स के बटन्स -->
-    <button class="custom-bottom-btn channel-btn" onclick="openMyChannel(event)" ontouchstart="openMyChannel(event)">channel</button>
-    <button class="custom-bottom-btn group-btn" onclick="openMyGroup(event)" ontouchstart="openMyGroup(event)">group</button>
-    <button class="custom-bottom-btn third-btn" onclick="openThirdLink(event)" ontouchstart="openThirdLink(event)">help</button>
+    <button class="custom-bottom-btn channel-btn" onclick="openMyChannel(event)" ontouchstart="openMyChannel(event)">Update</button>
+    <button class="custom-bottom-btn group-btn" onclick="openMyGroup(event)" ontouchstart="openMyGroup(event)">Support</button>
+    <button class="custom-bottom-btn third-btn" onclick="openThirdLink(event)" ontouchstart="openThirdLink(event)">Help</button>
 </div>
 
 <style>
@@ -251,17 +439,17 @@
 
     // 1. Bot 1 का लिंक
     function openBot1(e) {
-        handleNavigation(e, "https://t.me/laado_musicbot");
+        handleNavigation(e, "https://t.me/laado_musicbot?start=_tgr_CR8ielg0YTJl");
     }
 
     // 2. Bot 2 का लिंक
     function openBot2(e) {
-        handleNavigation(e, "https://t.me/PlayerPro_MusicBot");
+        handleNavigation(e, "https://t.me/PlayerPro_MusicBot?start=_tgr_C62RiaZlNTVl");
     }
 
     // 3. Bot 3 का लिंक
     function openBot3(e) {
-        handleNavigation(e, "https://t.me/Kuku_MusicBot");
+        handleNavigation(e, "https://t.me/Kuku_MusicBot?start=_tgr_6kQXhMQ1MzQ9");
     }
 
     // 4. चैनल का लिंक
@@ -279,6 +467,5 @@
         handleNavigation(e, "https://t.me/Comeback_009"); 
     }
 </script>
-    
 </body>
-</html>
+            </html>
