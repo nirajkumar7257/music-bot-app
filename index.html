@@ -181,6 +181,9 @@
             text-align: center;
             width: 100%;
             margin-top: 12px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         /* Help Button / My Button */
@@ -204,7 +207,7 @@
             background-color: var(--secondary-color);
         }
 
-        /* User Details Card with 2-color design */
+        /* Compact Profile Card */
         #user-card {
             background: transparent;
             padding: 0;
@@ -212,6 +215,266 @@
             margin-bottom: 15px;
         }
 
+        .profile-tap-card {
+            width: 100%;
+            max-width: 400px;
+            background: var(--bg-color);
+            border-radius: 12px;
+            box-shadow: 0 3px 10px var(--shadow-color);
+            overflow: hidden;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-tap-card:active {
+            transform: scale(0.98);
+            box-shadow: 0 5px 15px var(--shadow-color);
+        }
+
+        .profile-tap-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+
+        .profile-tap-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid white;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .profile-tap-info {
+            flex: 1;
+            color: white;
+        }
+
+        .profile-tap-name {
+            font-weight: bold;
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .profile-tap-hint {
+            font-size: 12px;
+            opacity: 0.9;
+            margin: 4px 0 0 0;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .status-online {
+            background-color: #10b981;
+            color: white;
+        }
+
+        .status-away {
+            background-color: #f59e0b;
+            color: white;
+        }
+
+        .status-offline {
+            background-color: #6b7280;
+            color: white;
+        }
+
+        /* Active Time Box */
+        .active-time-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 12px;
+        }
+
+        .active-time-label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .active-time-value {
+            font-size: 13px;
+            opacity: 0.95;
+        }
+
+        /* Profile Details Modal */
+        .profile-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .profile-modal-overlay.show {
+            display: flex;
+        }
+
+        .profile-modal {
+            background: var(--bg-color);
+            border-radius: 12px;
+            padding: 0;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+            overflow: hidden;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .profile-modal-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 20px 15px;
+            text-align: center;
+        }
+
+        .profile-modal-header h3 {
+            margin: 0;
+            color: white;
+            font-size: 16px;
+        }
+
+        .profile-modal-content {
+            padding: 20px;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .profile-modal-avatar-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-modal-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid var(--primary-color);
+            object-fit: cover;
+            position: relative;
+        }
+
+        /* Status Indicator on Avatar */
+        .status-indicator {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 3px solid white;
+            bottom: 0;
+            right: 0;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .status-indicator.online {
+            background-color: #10b981;
+        }
+
+        .status-indicator.away {
+            background-color: #f59e0b;
+        }
+
+        .status-indicator.offline {
+            background-color: #6b7280;
+        }
+
+        .profile-modal-content p {
+            margin: 12px 0;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .profile-info-section {
+            padding: 15px;
+            background: var(--card-bg);
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+
+        .profile-info-label {
+            font-size: 12px;
+            color: var(--primary-color);
+            font-weight: bold;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .profile-info-value {
+            font-size: 14px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .profile-modal-footer {
+            padding: 15px;
+            background: var(--card-bg);
+            text-align: center;
+            border-top: 1px solid var(--shadow-color);
+        }
+
+        .profile-modal-close {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .profile-modal-close:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* User Details Card with 2-color design */
         .user-details-box {
             width: 100%;
             max-width: 400px;
@@ -273,17 +536,6 @@
             max-width: 400px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
         }
 
         .theme-modal h2 {
@@ -428,34 +680,21 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* 1. बॉट 1 बटन: संतरा रंग (Orange) */
-        .bot1-btn { background-color: #e67e22; }
-        .bot1-btn:active { background-color: #d35400; }
-
-        /* 2. बॉट 2 बटन: गुलाबी/लाल रंग (Pinkish Red) */
-        .bot2-btn { background-color: #e84393; }
-        .bot2-btn:active { background-color: #c2185b; }
-
-        /* 3. बॉट 3 बटन: फिरोजी/लाइट ग्रीन (Teal/Mint Green) */
-        .bot3-btn { background-color: #10b981; }
-        .bot3-btn:active { background-color: #059669; }
-
-        /* 4. चैनल बटन: नीला (Blue) */
+        /* 1. चैनल बटन: नीला (Blue) */
         .channel-btn { background-color: #2481cc; }
         .channel-btn:active { background-color: #1a659e; }
 
-        /* 5. ग्रुप बटन: गहरा हरा (Dark Green) */
+        /* 2. ग्रुप बटन: गहरा हरा (Dark Green) */
         .group-btn { background-color: #2ea64f; }
         .group-btn:active { background-color: #217838; }
 
-        /* 6. हेल्प बटन: बैंगनी (Purple) */
+        /* 3. हेल्प बटन: बैंगनी (Purple) */
         .third-btn { background-color: #6c5ce7; }
         .third-btn:active { background-color: #5b4cc4; }
     </style>
 </head>
 <body class="light-theme">
     <h2>Welcome dear 👀</h2>
-    <h4>🎧 Looking For A Music Bot? ✨Fast • Smooth • 24/7 Active, Play 🔍 Your Favorite Songs Instantly, Enjoy Music Without Hassle 🎶 Try It Once, You'll Love It 💞</h4>
     
     <!-- Theme Selector Button -->
     <button class="theme-toggle-btn" onclick="openThemeModal()" title="Change Theme">🎨</button>
@@ -474,7 +713,8 @@
                 <div class="theme-option green-option" onclick="setTheme('green-theme', this)" data-theme="green-theme">
                     Green
                 </div>
-                <div class="theme-option purple-option" onclick="setTheme('purple-theme', this)" data-theme="purple-theme">
+                
+               <div class="theme-option purple-option" onclick="setTheme('purple-theme', this)" data-theme="purple-theme">
                     Purple
                 </div>
                 <div class="theme-option ocean-option" onclick="setTheme('ocean-theme', this)" data-theme="ocean-theme">
@@ -487,34 +727,115 @@
         </div>
     </div>
     
-    <!-- Feature 1: User Details -->
+    <!-- Feature 1: User Details - Compact Tap Card -->
     <div id="user-card">
-        <div class="user-details-box">
-            <div class="user-details-header">
-                <h3>👤 User Details (You)</h3>
+        <div class="profile-tap-card" onclick="openProfileModal()">
+            <div class="profile-tap-content">
+                <img id="profile-tap-avatar" class="profile-tap-avatar" src="https://cloudflare.com" alt="User DP">
+                <div class="profile-tap-info">
+                    <p class="profile-tap-name" id="profile-tap-name">Loading...</p>
+                    <p class="profile-tap-hint">💻 Tap to view details</p>
+                </div>
             </div>
-            <div class="user-details-content">
-                <div class="avatar-container">
-                    <img id="u-avatar" class="user-avatar" src="https://cloudflare.com" alt="User DP">
+        </div>
+    </div>
+
+    <!-- Dropdown Arrow Icon -->
+    <div class="profile-capsule-arrow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+    </div>
+</div>
+    <h4>🎧 Looking For A Music Bot? ✨Fast • Smooth • 24/7 Active, Play 🔍 Your Favorite Songs Instantly, Enjoy Music Without Hassle 🎶 Try It Once, You'll Love It 💞</h4>
+    
+
+    <!-- Profile Details Modal -->
+    <div class="profile-modal-overlay" id="profileModalOverlay">
+        <div class="profile-modal">
+            <div class="profile-modal-header">
+                <h3>💞Your Profile💞</h3>
+            </div>
+            <div class="profile-modal-content">
+                <div class="profile-modal-avatar-container">
+                    <img id="profile-modal-avatar" class="profile-modal-avatar" src="https://cloudflare.com" alt="User DP">
+                    <div class="status-indicator online" id="profile-status-indicator" title="User Status">●</div>
                 </div>
 
-                <p><span class="bold">Name:</span> <span id="u-name">Loading...</span></p>
-                <p><span class="bold">Username:</span> <span id="u-username">Loading...</span></p>
-                <p><span class="bold">ID:</span> <span id="u-id">Loading...</span></p>
-                <p><span class="bold">Language:</span> <span id="u-lang">Loading...</span></p>
+                <!-- User Basic Information -->
+                <div class="profile-info-section">
+                    <div>
+                        <span class="profile-info-label">Name</span>
+                        <div class="profile-info-value" id="profile-modal-name">Loading...</div>
+                    </div>
+                </div>
+
+                <div class="profile-info-section">
+                    <div>
+                        <span class="profile-info-label">Username</span>
+                        <div class="profile-info-value" id="profile-modal-username">Loading...</div>
+                    </div>
+                </div>
+
+                <div class="profile-info-section">
+                    <div>
+                        <span class="profile-info-label">User ID</span>
+                        <div class="profile-info-value" id="profile-modal-id">Loading...</div>
+                    </div>
+                </div>
+
+                <div class="profile-info-section">
+                    <div>
+                        <span class="profile-info-label">Language</span>
+                        <div class="profile-info-value" id="profile-modal-lang">Loading...</div>
+                    </div>
+                </div>
+
+                <!-- User Status Section -->
+                <div class="profile-info-section">
+                    <div>
+                        <span class="profile-info-label">📱Current Status</span>
+                        <div class="profile-info-value" id="profile-modal-status">Online</div>
+                    </div>
+                </div>
+
+                <!-- Last Active Time -->
+                <div class="profile-info-section">
+                    <div>
+                        <span class="profile-info-label">⏰ Last Active</span>
+                        <div class="profile-info-value" id="profile-modal-last-active">Just now</div>
+                    </div>
+                </div>
+
+                <!-- Active Time Duration -->
+                <div class="profile-info-section">
+                    <div>
+                        <span class="profile-info-label">⌛ Active Duration Today</span>
+                        <div class="profile-info-value" id="profile-modal-active-time">Calculating...</div>
+                    </div>
+                </div>
+
+                <!-- Join Date -->
+                <div class="profile-info-section">
+                    <div>
+                        <span class="profile-info-label">🗓️ Member Since</span>
+                        <div class="profile-info-value" id="profile-modal-join-date">Today</div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-modal-footer">
+                <button class="profile-modal-close" onclick="closeProfileModal()">Close</button>
             </div>
         </div>
     </div>
 
     <h2>🤖 Music Bot Collective</h2>
-
-    <!-- Active Bots Card -->
+<!-- Active Bots Card -->
     <div class="card" id="active-card">
         <h3>Total Bots 10</h3>
-        <p><span class="bold">Active Bots:</span> 03</p>
+        <p><span class="bold">Active Bot</span> 03</p>
     </div>
-
-    <!-- Chat Box 1: Laado Music -->
+<!-- Chat Box 1: Laado Music -->
     <div class="card" id="online-card">
         <div class="chat-box">
             <div class="chat-message-row">
@@ -524,14 +845,14 @@
                     <div class="message-bubble">Username: @laado_musicbot</div>
                     <div class="message-time">🟢 Online</div>
                     <div class="button-container">
-                        <a href="https://t.me/laado_musicbot?startgroup=true" class="help-button">ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ᴄʜᴀᴛ</a>
+                        <a href="https://t.me/laado_musicbot?startgroup=true" class="help-button">ᴏᴘᴇɴ ᴘʀɪᴠᴀᴛᴇ ᴄʜᴀᴛ</a>
+                        <a href="https://t.me/laado_musicbot?startgroup=true" class="help-button">ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Chat Box 2: PlayerPro Music -->
+<!-- Chat Box 2: PlayerPro Music -->
     <div class="card" id="open-card">
         <div class="chat-box">
             <div class="chat-message-row">
@@ -541,14 +862,14 @@
                     <div class="message-bubble">Username: @PlayerPro_MusicBot</div>
                     <div class="message-time">🟢 Online</div>
                     <div class="button-container">
-                        <a href="https://t.me/PlayerPro_MusicBot?startgroup=true" class="help-button">ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ᴄʜᴀᴛ</a>
+                        <a href="https://t.me/PlayerPro_MusicBot?startgroup=true" class="help-button">ᴏᴘᴇɴ ᴘʀɪᴠᴀᴛᴇ ᴄʜᴀᴛ</a>
+                        <a href="https://t.me/PlayerPro_MusicBot?startgroup=true" class="help-button">ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Chat Box 3: Kuku Music -->
+<!-- Chat Box 3: Kuku Music -->
     <div class="card" id="one-card">
         <div class="chat-box">
             <div class="chat-message-row">
@@ -558,20 +879,35 @@
                     <div class="message-bubble">Username: @Kuku_MusicBot</div>
                     <div class="message-time">🟢 Online</div>
                     <div class="button-container">
-                        <a href="https://t.me/Kuku_MusicBot?startgroup=true" class="help-button">ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ᴄʜᴀᴛ</a>
+                        <a href="https://t.me/Kuku_MusicBot?startgroup=true" class="help-button">ᴏᴘᴇɴ ᴘʀɪᴠᴀᴛᴇ ᴄʜᴀᴛ</a>
+                        <a href="https://t.me/Kuku_MusicBot?startgroup=true" class="help-button">ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    
-    <!-- Feature 3: App developer Details -->
+    <!-- Chat Box 4: Radha Music -->
+    <div class="card" id="radha-card">
+        <div class="chat-box">
+            <div class="chat-message-row">
+                <img src="radha-music.png" alt="User Avatar" class="chat-dp">
+                <div class="message-content-wrapper">
+                    <div class="user-name">Radha ꭙ Music ♪</div>
+                    <div class="message-bubble">Username: @radha_MusicBot</div>
+                    <div class="message-time">🔵 Offline</div>
+                    <div class="button-container">
+                        <a href="https://t.me/PlayerPro_MusicBot?startgroup=true" class="help-button">ᴏᴘᴇɴ ᴘʀɪᴠᴀᴛᴇ ᴄʜᴀᴛ</a>
+                        <a href="https://t.me/PlayerPro_MusicBot?startgroup=true" class="help-button">ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ <!-- Feature 3: App developer Details -->
     <div class="card" id="developer-card">
         <h3>Developer & Support</h3>
     </div>
-    
-    <!-- Chat Box 4: Owner details-->
+     <!-- Chat Box 4: Owner details-->
     <div class="card" id="owner-card">
         <div class="chat-box">
             <div class="chat-message-row">
@@ -587,8 +923,102 @@
             </div>
         </div>
     </div>
+<script>
+        // Track user session start time
+        const userSessionStartTime = new Date();
+        let lastActivityTime = new Date();
 
-    <script>
+        // Update activity time on user interaction
+        document.addEventListener('click', () => {
+            lastActivityTime = new Date();
+        });
+
+        document.addEventListener('touchstart', () => {
+            lastActivityTime = new Date();
+        });
+
+        // Calculate active duration
+        function getActiveDuration() {
+            const now = new Date();
+            const diffMs = now - userSessionStartTime;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+
+            if (diffDays > 0) {
+                return `${diffDays}d ${diffHours % 24}h`;
+            } else if (diffHours > 0) {
+                return `${diffHours}h ${diffMins % 60}m`;
+            } else {
+                return `${diffMins}m`;
+            }
+        }
+
+        // Get formatted last active time
+        function getLastActiveTime() {
+            const now = new Date();
+            const diffMs = now - lastActivityTime;
+            const diffSecs = Math.floor(diffMs / 1000);
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+
+            if (diffSecs < 60) {
+                return 'Just now';
+            } else if (diffMins < 60) {
+                return `${diffMins}m ago`;
+            } else if (diffHours < 24) {
+                return `${diffHours}h ago`;
+            } else {
+                return lastActivityTime.toLocaleDateString();
+            }
+        }
+
+        // Get user status based on activity
+        function getUserStatus() {
+            const diffMins = Math.floor((new Date() - lastActivityTime) / 60000);
+            if (diffMins < 5) return 'online';
+            if (diffMins < 30) return 'away';
+            return 'offline';
+        }
+
+        // Get status display text
+        function getStatusText() {
+            const status = getUserStatus();
+            if (status === 'online') return '🟢 Online';
+            if (status === 'away') return '🟡 Away';
+            return '⚪ Offline';
+        }
+
+        // Get status class
+        function getStatusClass() {
+            const status = getUserStatus();
+            return status === 'online' ? 'online' : (status === 'away' ? 'away' : 'offline');
+        }
+
+        // Update status indicators
+        function updateStatusIndicators() {
+            const statusIndicator = document.getElementById('profile-status-indicator');
+            const statusText = document.getElementById('profile-modal-status');
+            const lastActiveEl = document.getElementById('profile-modal-last-active');
+            const activeDurationEl = document.getElementById('profile-modal-active-time');
+
+            if (statusIndicator) {
+                statusIndicator.className = `status-indicator ${getStatusClass()}`;
+            }
+            if (statusText) {
+                statusText.textContent = getStatusText();
+            }
+            if (lastActiveEl) {
+                lastActiveEl.textContent = getLastActiveTime();
+            }
+            if (activeDurationEl) {
+                activeDurationEl.textContent = getActiveDuration();
+            }
+        }
+
+        // Update status every 30 seconds
+        setInterval(updateStatusIndicators, 30000);
+
         function initTelegramApp() {
             const tg = window.Telegram?.WebApp;
 
@@ -599,14 +1029,23 @@
                 const user = tg.initDataUnsafe?.user;
 
                 if (user && user.id) {
-                    document.getElementById('u-name').innerText = `${user.first_name} ${user.last_name || ''}`;
-                    document.getElementById('u-username').innerText = user.username ? `@${user.username}` : 'No Username';
-                    document.getElementById('u-id').innerText = user.id;
-                    document.getElementById('u-lang').innerText = user.language_code || 'en';
+                    // Compact Profile Card
+                    document.getElementById('profile-tap-name').innerText = `${user.first_name} ${user.last_name || ''}`;
+                    document.getElementById('profile-tap-avatar').src = user.photo_url || "https://cloudflare.com";
 
-                    if (user.photo_url) {
-                        document.getElementById('u-avatar').src = user.photo_url;
-                    }
+                    // Modal Details
+                    document.getElementById('profile-modal-name').innerText = `${user.first_name} ${user.last_name || ''}`;
+                    document.getElementById('profile-modal-username').innerText = user.username ? `@${user.username}` : 'No Username';
+                    document.getElementById('profile-modal-id').innerText = user.id;
+                    document.getElementById('profile-modal-lang').innerText = user.language_code || 'en';
+                    document.getElementById('profile-modal-avatar').src = user.photo_url || "https://cloudflare.com";
+
+                    // Set join date
+                    const today = new Date();
+                    document.getElementById('profile-modal-join-date').innerText = today.toLocaleDateString();
+
+                    // Initialize status indicators
+                    updateStatusIndicators();
 
                     clearInterval(checkInterval);
                 }
@@ -617,16 +1056,45 @@
 
         setTimeout(() => {
             clearInterval(checkInterval);
-            if (document.getElementById('u-id').innerText === "Loading...") {
-                document.getElementById('u-name').innerText = "Web Browser Mode";
-                document.getElementById('u-username').innerText = "@not_inside_tg";
-                document.getElementById('u-id').innerText = "Offline_ID_101";
-                document.getElementById('u-lang').innerText = "en";
-                document.getElementById('u-avatar').src = "https://cloudflare.com";
+            if (document.getElementById('profile-modal-id').innerText === "Loading...") {
+                // Compact Profile Card
+                document.getElementById('profile-tap-name').innerText = "Web Browser Mode";
+                document.getElementById('profile-tap-avatar').src = "https://cloudflare.com";
+
+                // Modal Details
+                document.getElementById('profile-modal-name').innerText = "Web Browser Mode";
+                document.getElementById('profile-modal-username').innerText = "@not_inside_tg";
+                document.getElementById('profile-modal-id').innerText = "Offline_ID_101";
+                document.getElementById('profile-modal-lang').innerText = "en";
+                document.getElementById('profile-modal-avatar').src = "https://cloudflare.com";
+
+                // Set join date
+                const today = new Date();
+                document.getElementById('profile-modal-join-date').innerText = today.toLocaleDateString();
+
+                // Initialize status indicators
+                updateStatusIndicators();
             }
         }, 5000);
 
-        // Theme Management Functions
+        // Profile Modal Functions
+        function openProfileModal() {
+            updateStatusIndicators();
+            document.getElementById('profileModalOverlay').classList.add('show');
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModalOverlay').classList.remove('show');
+        }
+
+        // Close modal on overlay click
+        document.getElementById('profileModalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeProfileModal();
+            }
+        });
+
+        // Theme Management Fun
         function openThemeModal() {
             document.getElementById('themeModalOverlay').style.display = 'flex';
         }
@@ -635,52 +1103,46 @@
             document.getElementById('themeModalOverlay').style.display = 'none';
         }
 
-        function setTheme(themeName, element) {
-            // Remove previous theme
-            document.body.classList.remove('light-theme', 'dark-theme', 'green-theme', 'purple-theme', 'ocean-theme');
-            
-            // Add new theme
-            document.body.classList.add(themeName);
+        function setTheme(theme, element) {
+            document.body.className = theme;
             
             // Update active state
-            document.querySelectorAll('.theme-option').forEach(opt => {
-                opt.classList.remove('active');
+            document.querySelectorAll('.theme-option').forEach(el => {
+                el.classList.remove('active');
             });
             element.classList.add('active');
-            
+
             // Save to localStorage
-            localStorage.setItem('selectedTheme', themeName);
+            localStorage.setItem('selectedTheme', theme);
         }
 
         // Load saved theme on page load
-        window.addEventListener('load', () => {
+        window.addEventListener('load', function() {
             const savedTheme = localStorage.getItem('selectedTheme') || 'light-theme';
-            document.body.classList.remove('light-theme', 'dark-theme', 'green-theme', 'purple-theme', 'ocean-theme');
-            document.body.classList.add(savedTheme);
+            document.body.className = savedTheme;
             
-            // Update active indicator
-            document.querySelectorAll('.theme-option').forEach(opt => {
-                if (opt.getAttribute('data-theme') === savedTheme) {
-                    opt.classList.add('active');
-                }
-            });
+            const themeElement = document.querySelector(`[data-theme="${savedTheme}"]`);
+            if (themeElement) {
+                document.querySelectorAll('.theme-option').forEach(el => {
+                    el.classList.remove('active');
+                });
+                themeElement.classList.add('active');
+            }
+
+            // Initialize status on load
+            updateStatusIndicators();
         });
 
-        // Close modal when clicking outside
-        document.getElementById('themeModalOverlay').addEventListener('click', (e) => {
-            if (e.target.id === 'themeModalOverlay') {
+        // Close theme modal on overlay click
+        document.getElementById('themeModalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
                 closeThemeModal();
             }
         });
     </script>
-
-    <!-- छह रंग-बिरंगे बटनों का HTML कोड -->
+        <!-- छह रंग-बिरंगे बटनों का HTML कोड -->
     <div class="custom-bottom-container">
-        <button class="custom-bottom-btn bot1-btn" onclick="openBot1(event)" ontouchstart="openBot1(event)">Bot 1</button>
-        <button class="custom-bottom-btn bot2-btn" onclick="openBot2(event)" ontouchstart="openBot2(event)">Bot 2</button>
-        <button class="custom-bottom-btn bot3-btn" onclick="openBot3(event)" ontouchstart="openBot3(event)">Bot 3</button>
-        
-        <!-- नए 3 बॉट्स के बटन्स -->
+        <!--- सपोर्ट केे तीन बटन ---!>
         <button class="custom-bottom-btn channel-btn" onclick="openMyChannel(event)" ontouchstart="openMyChannel(event)">Update</button>
         <button class="custom-bottom-btn group-btn" onclick="openMyGroup(event)" ontouchstart="openMyGroup(event)">Support</button>
         <button class="custom-bottom-btn third-btn" onclick="openThirdLink(event)" ontouchstart="openThirdLink(event)">Help</button>
@@ -712,32 +1174,17 @@
             }
         }
 
-        // 1. Bot 1 का लिंक
-        function openBot1(e) {
-            handleNavigation(e, "https://t.me/laado_musicbot?start=_tgr_CR8ielg0YTJl");
-        }
-
-        // 2. Bot 2 का लिंक
-        function openBot2(e) {
-            handleNavigation(e, "https://t.me/PlayerPro_MusicBot?start=_tgr_C62RiaZlNTVl");
-        }
-
-        // 3. Bot 3 का लिंक
-        function openBot3(e) {
-            handleNavigation(e, "https://t.me/Kuku_MusicBot?start=_tgr_6kQXhMQ1MzQ9");
-        }
-
-        // 4. चैनल का लिंक
+        // 1. चैनल का लिंक
         function openMyChannel(e) {
             handleNavigation(e, "https://t.me/Sangeet_Stream"); 
         }
 
-        // 5. ग्रुप का लिंक
+        // 2. ग्रुप का लिंक
         function openMyGroup(e) {
             handleNavigation(e, "https://t.me/sapna_quiz"); 
         }
 
-        // 6. तीसरे हेल्प बटन का लिंक
+        // 3. तीसरे हेल्प बटन का लिंक
         function openThirdLink(e) {
             handleNavigation(e, "https://t.me/Comeback_009"); 
         }
